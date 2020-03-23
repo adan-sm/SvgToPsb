@@ -103,7 +103,13 @@ namespace Psb.Tests.Infrastructure.Builders
                 ExpectedHeight = 10,
                 LayersRectangles = new List<Psb.Domain.Rectangle>
                 {
-                    new Psb.Domain.Rectangle { Left = 0, Bottom = 0, Right = 9, Top = 9 }
+                    new Psb.Domain.Rectangle
+                    { 
+                        Top = 0,
+                        Left = 0, 
+                        Bottom = 9, 
+                        Right = 9, 
+                    }
                 }
             },
             new LayerTestCase
@@ -112,8 +118,20 @@ namespace Psb.Tests.Infrastructure.Builders
                 ExpectedHeight = 100,
                 LayersRectangles = new List<Psb.Domain.Rectangle>
                 {
-                    new Psb.Domain.Rectangle { Left = 0, Bottom = 0, Right = 9, Top = 9 },
-                    new Psb.Domain.Rectangle { Left = 90, Bottom = 90, Right = 99, Top = 99 },
+                    new Psb.Domain.Rectangle
+                    { 
+                        Top = 0,
+                        Left = 0, 
+                        Bottom = 9, 
+                        Right = 9, 
+                    },
+                    new Psb.Domain.Rectangle
+                    { 
+                        Top = 90,
+                        Left = 90,
+                        Bottom = 99,
+                        Right = 99,
+                    },
                 }
             },
         };

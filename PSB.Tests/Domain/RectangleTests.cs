@@ -23,7 +23,23 @@ namespace Psb.Tests.Domain
     {
         static List<RectangleTestCase> RectangleTestCases = new List<RectangleTestCase>
         {
-            
+            new RectangleTestCase
+            {
+                Rectangles = new List<Psb.Domain.Rectangle>
+                {
+                    new Psb.Domain.Rectangle
+                    {
+                        Top = 0,
+                        Left = 0,
+                        Bottom = 10,
+                        Right = 10
+                    }
+                },
+                ExpectedTop = 0,
+                ExpectedLeft = 0,
+                ExpectedBottom = 10,
+                ExpectedRight = 10
+            }
         };
 
         [TestCaseSource(nameof(RectangleTestCases))]
@@ -39,9 +55,9 @@ namespace Psb.Tests.Domain
             }
 
             // assert
-            Assert.AreEqual(rectangleTestCase.ExpectedBottom, result.Bottom);
             Assert.AreEqual(rectangleTestCase.ExpectedTop, result.Top);
             Assert.AreEqual(rectangleTestCase.ExpectedLeft, result.Left);
+            Assert.AreEqual(rectangleTestCase.ExpectedBottom, result.Bottom);
             Assert.AreEqual(rectangleTestCase.ExpectedRight, result.Right);
         }
     }
