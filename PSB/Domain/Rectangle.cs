@@ -14,17 +14,17 @@ namespace Psb.Domain
 
         public static Rectangle Merge(Rectangle r1, Rectangle r2)
         {
+            var t = Math.Min(r1.Top, r2.Top);
             var l = Math.Min(r1.Left, r2.Left);
-            var t = Math.Min(r1.Bottom, r2.Bottom);
+            var b = Math.Max(r1.Bottom, r2.Bottom);
             var r = Math.Max(r1.Right, r2.Right);
-            var b = Math.Max(r1.Top, r2.Top);
 
             return new Rectangle
             {
+                Top = t,
                 Left = l,
-                Right = r,
                 Bottom = b,
-                Top = t
+                Right = r,
             };
         }
     }
