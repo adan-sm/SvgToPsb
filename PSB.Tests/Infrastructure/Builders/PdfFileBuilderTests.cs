@@ -7,7 +7,7 @@ namespace Psb.Tests.Infrastructure.Builders
 {
     public class LayerTestCase
     {
-        public List<Domain.Rectangle> LayersRectangles { get; set; }
+        public List<Psb.Domain.Rectangle> LayersRectangles { get; set; }
 
         public int ExpectedWidth { get; set; }
 
@@ -51,14 +51,14 @@ namespace Psb.Tests.Infrastructure.Builders
         }
 
 
-        [TestCase(Domain.ColorMode.Bitmap)]
-        [TestCase(Domain.ColorMode.CMYK)]
-        [TestCase(Domain.ColorMode.DuoTone)]
-        [TestCase(Domain.ColorMode.Grayscale)]
-        [TestCase(Domain.ColorMode.Indexed)]
-        [TestCase(Domain.ColorMode.Lab)]
-        [TestCase(Domain.ColorMode.Multichannel)]
-        [TestCase(Domain.ColorMode.RGB)]
+        [TestCase(Psb.Domain.ColorMode.Bitmap)]
+        [TestCase(Psb.Domain.ColorMode.CMYK)]
+        [TestCase(Psb.Domain.ColorMode.DuoTone)]
+        [TestCase(Psb.Domain.ColorMode.Grayscale)]
+        [TestCase(Psb.Domain.ColorMode.Indexed)]
+        [TestCase(Psb.Domain.ColorMode.Lab)]
+        [TestCase(Psb.Domain.ColorMode.Multichannel)]
+        [TestCase(Psb.Domain.ColorMode.RGB)]
         public void WithColorMode_ShouldSetPsdColorMode_WhenCalled(Psb.Domain.ColorMode colorMode)
         {
             // arrange
@@ -72,10 +72,10 @@ namespace Psb.Tests.Infrastructure.Builders
             Assert.AreEqual(colorMode, result.ColorMode);
         }
 
-        [TestCase(Domain.NumberOfBitsPerChannel._1)]
-        [TestCase(Domain.NumberOfBitsPerChannel._8)]
-        [TestCase(Domain.NumberOfBitsPerChannel._16)]
-        [TestCase(Domain.NumberOfBitsPerChannel._32)]
+        [TestCase(Psb.Domain.NumberOfBitsPerChannel._1)]
+        [TestCase(Psb.Domain.NumberOfBitsPerChannel._8)]
+        [TestCase(Psb.Domain.NumberOfBitsPerChannel._16)]
+        [TestCase(Psb.Domain.NumberOfBitsPerChannel._32)]
         public void WithDepth_ShouldSetPsdDepth_WhenCalled(Psb.Domain.NumberOfBitsPerChannel numberOfBitsPerChannel)
         {
             // arrange
@@ -95,25 +95,25 @@ namespace Psb.Tests.Infrastructure.Builders
             {
                 ExpectedWidth = 0,
                 ExpectedHeight = 0,
-                LayersRectangles = new List<Domain.Rectangle>()
+                LayersRectangles = new List<Psb.Domain.Rectangle>()
             },
             new LayerTestCase
             {
                 ExpectedWidth = 10,
                 ExpectedHeight = 10,
-                LayersRectangles = new List<Domain.Rectangle>
+                LayersRectangles = new List<Psb.Domain.Rectangle>
                 {
-                    new Domain.Rectangle { Left = 0, Bottom = 0, Right = 9, Top = 9 }
+                    new Psb.Domain.Rectangle { Left = 0, Bottom = 0, Right = 9, Top = 9 }
                 }
             },
             new LayerTestCase
             {
                 ExpectedWidth = 100,
                 ExpectedHeight = 100,
-                LayersRectangles = new List<Domain.Rectangle>
+                LayersRectangles = new List<Psb.Domain.Rectangle>
                 {
-                    new Domain.Rectangle { Left = 0, Bottom = 0, Right = 9, Top = 9 },
-                    new Domain.Rectangle { Left = 90, Bottom = 90, Right = 99, Top = 99 },
+                    new Psb.Domain.Rectangle { Left = 0, Bottom = 0, Right = 9, Top = 9 },
+                    new Psb.Domain.Rectangle { Left = 90, Bottom = 90, Right = 99, Top = 99 },
                 }
             },
         };
@@ -127,7 +127,7 @@ namespace Psb.Tests.Infrastructure.Builders
                             .LayersRectangles
                             .Select(lt =>
                             {
-                                var layer = new Moq.Mock<Domain.ILayer>();
+                                var layer = new Moq.Mock<Psb.Domain.ILayer>();
                                 layer
                                     .SetupGet(l => l.Rectangle)
                                     .Returns(lt);
@@ -135,7 +135,7 @@ namespace Psb.Tests.Infrastructure.Builders
                                 return layer.Object;
                             });
 
-            var layerList = new Moq.Mock<Domain.ILayerList>();
+            var layerList = new Moq.Mock<Psb.Domain.ILayerList>();
             layerList
                 .Setup(ll => ll.GetEnumerator())
                 .Returns(() => layers.GetEnumerator());
