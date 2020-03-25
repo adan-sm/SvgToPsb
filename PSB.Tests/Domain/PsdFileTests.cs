@@ -38,5 +38,20 @@ namespace Psb.Tests.Domain
             // assert
             Assert.IsTrue(result.Message.StartsWith(expectedMessageStart));
         }
+
+        [TestCase((ushort)0, "Minimum channel count : 1")]
+        [TestCase((ushort)(Consts.PsdFile.MaxChannelCount + 1), "Maximum channel count : 56")]
+        public void SetChannelCount_ShouldThrowsArgumentException_WhenCalledWithIncorrectValue(ushort channelCount, string expectedMessageStart)
+        {
+            // arrange
+            var sut = new PsdFile();
+            var testMethod = new TestDelegate(() => sut.ChannelCount = channelCount);
+
+            // act
+            var result = Assert.Throws<ArgumentException>(testMethod);
+
+            // assert
+            Assert.IsTrue(result.Message.StartsWith(expectedMessageStart));
+        }
     }
 }

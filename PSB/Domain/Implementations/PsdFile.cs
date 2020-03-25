@@ -9,6 +9,7 @@ namespace Psb.Domain
 
         private uint _width;
         private uint _height;
+        private ushort _channelCount;
 
         public PsdFile() 
             : this(null)
@@ -72,8 +73,21 @@ namespace Psb.Domain
 
         public ushort ChannelCount
         {
-            get;
-            internal set;
+            get => _channelCount;
+            internal set
+            {
+                if (value < Consts.PsdFile.MinChannelCount)
+                {
+                    throw new ArgumentException($"Minimum channel count : {Consts.PsdFile.MinChannelCount}");
+                }
+
+                if (value > Consts.PsdFile.MaxChannelCount)
+                {
+                    throw new ArgumentException($"Maximum channel count : {Consts.PsdFile.MaxChannelCount}");
+                }
+
+                _channelCount = value;
+            }
         }
 
         public IColorModeData ColorModeData => throw new NotImplementedException();

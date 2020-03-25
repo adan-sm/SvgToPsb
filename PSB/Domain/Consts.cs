@@ -12,6 +12,9 @@
 
             public const uint MaxRegularFileWidth = 30000;
             public const uint MaxRegularFileHeight = 30000;
+
+            public const ushort MinChannelCount = 1;
+            public const ushort MaxChannelCount = 56;
         }
     }
 }
