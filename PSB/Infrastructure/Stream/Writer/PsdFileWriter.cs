@@ -3,6 +3,9 @@ using System;
 
 namespace Psb.Infrastructure.Stream.Writer
 {
+    /// <summary>
+    /// TODO : remove "public"
+    /// </summary>
     public class PsdFileWriter
     {
         private readonly ISectionWriterFactory _sectionWriterFactory;
