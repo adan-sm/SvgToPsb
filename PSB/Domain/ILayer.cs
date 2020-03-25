@@ -6,7 +6,7 @@ namespace Psb.Domain
     {
         string Name { get; }
 
-        BlendModeKey BlendMode { get; }
+        Enums.BlendModeKey BlendMode { get; }
 
         Rectangle Rectangle { get; }
 

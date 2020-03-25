@@ -1,4 +1,4 @@
-﻿namespace Psb.Domain
+﻿namespace Psb.Domain.Enums
 {
     public enum NumberOfBitsPerChannel : ushort
     {

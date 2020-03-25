@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Psb.Domain
+namespace Psb.Domain.Enums
 {
     public enum BlendModeKey
     {

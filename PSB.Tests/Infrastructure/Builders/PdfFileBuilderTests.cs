@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -51,15 +52,15 @@ namespace Psb.Tests.Infrastructure.Builders
         }
 
 
-        [TestCase(Psb.Domain.ColorMode.Bitmap)]
-        [TestCase(Psb.Domain.ColorMode.CMYK)]
-        [TestCase(Psb.Domain.ColorMode.DuoTone)]
-        [TestCase(Psb.Domain.ColorMode.Grayscale)]
-        [TestCase(Psb.Domain.ColorMode.Indexed)]
-        [TestCase(Psb.Domain.ColorMode.Lab)]
-        [TestCase(Psb.Domain.ColorMode.Multichannel)]
-        [TestCase(Psb.Domain.ColorMode.RGB)]
-        public void WithColorMode_ShouldSetPsdColorMode_WhenCalled(Psb.Domain.ColorMode colorMode)
+        [TestCase(Psb.Domain.Enums.ColorMode.Bitmap)]
+        [TestCase(Psb.Domain.Enums.ColorMode.CMYK)]
+        [TestCase(Psb.Domain.Enums.ColorMode.DuoTone)]
+        [TestCase(Psb.Domain.Enums.ColorMode.Grayscale)]
+        [TestCase(Psb.Domain.Enums.ColorMode.Indexed)]
+        [TestCase(Psb.Domain.Enums.ColorMode.Lab)]
+        [TestCase(Psb.Domain.Enums.ColorMode.Multichannel)]
+        [TestCase(Psb.Domain.Enums.ColorMode.RGB)]
+        public void WithColorMode_ShouldSetPsdColorMode_WhenCalled(Psb.Domain.Enums.ColorMode colorMode)
         {
             // arrange
             var sut = new Psb.Infrastructure.Builders.Implementations.PsdFileBuilder();
@@ -72,11 +73,11 @@ namespace Psb.Tests.Infrastructure.Builders
             Assert.AreEqual(colorMode, result.ColorMode);
         }
 
-        [TestCase(Psb.Domain.NumberOfBitsPerChannel._1)]
-        [TestCase(Psb.Domain.NumberOfBitsPerChannel._8)]
-        [TestCase(Psb.Domain.NumberOfBitsPerChannel._16)]
-        [TestCase(Psb.Domain.NumberOfBitsPerChannel._32)]
-        public void WithDepth_ShouldSetPsdDepth_WhenCalled(Psb.Domain.NumberOfBitsPerChannel numberOfBitsPerChannel)
+        [TestCase(Psb.Domain.Enums.NumberOfBitsPerChannel._1)]
+        [TestCase(Psb.Domain.Enums.NumberOfBitsPerChannel._8)]
+        [TestCase(Psb.Domain.Enums.NumberOfBitsPerChannel._16)]
+        [TestCase(Psb.Domain.Enums.NumberOfBitsPerChannel._32)]
+        public void WithDepth_ShouldSetPsdDepth_WhenCalled(Psb.Domain.Enums.NumberOfBitsPerChannel numberOfBitsPerChannel)
         {
             // arrange
             var sut = new Psb.Infrastructure.Builders.Implementations.PsdFileBuilder();
@@ -91,12 +92,6 @@ namespace Psb.Tests.Infrastructure.Builders
 
         static List<LayerTestCase> LayersTestsCases = new List<LayerTestCase>
         {
-            new LayerTestCase
-            {
-                ExpectedWidth = 0,
-                ExpectedHeight = 0,
-                LayersRectangles = new List<Psb.Domain.Rectangle>()
-            },
             new LayerTestCase
             {
                 ExpectedWidth = 10,
@@ -168,6 +163,22 @@ namespace Psb.Tests.Infrastructure.Builders
             // assert
             Assert.AreEqual(layerTestsCase.ExpectedWidth, result.Width);
             Assert.AreEqual(layerTestsCase.ExpectedHeight, result.Height);
+        }
+
+        [Test]
+        public void WithAutomaticDimensionsFromLayersOrNotSpecified_ThrowsException_WhenCalledWithNoLayer()
+        {
+            // arrange
+            var sut = new Psb.Infrastructure.Builders.Implementations.PsdFileBuilder();
+            sut.WithAutomaticDimensionsFromLayers();
+
+            var method = new TestDelegate(() => sut.Build());
+
+            // act
+            var result = Assert.Throws<InvalidOperationException>(method);
+
+            // assert
+            Assert.IsTrue(result.Message.StartsWith("No layer in the file"));
         }
     }
 }

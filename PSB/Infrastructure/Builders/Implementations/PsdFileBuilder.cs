@@ -11,10 +11,10 @@ namespace Psb.Infrastructure.Builders.Implementations
         private Domain.IImageResourceList _imageRessources;
         private Domain.ILayerList _layers;
 
-        private uint _width;
-        private uint _height;
-        private ColorMode _colorMode;
-        private NumberOfBitsPerChannel _depth;
+        private uint _width = Consts.PsdFile.MinWidth;
+        private uint _height = Consts.PsdFile.MinHeight;
+        private Domain.Enums.ColorMode _colorMode;
+        private Domain.Enums.NumberOfBitsPerChannel _depth;
 
         enum SizePolicyConfig
         {
@@ -40,8 +40,8 @@ namespace Psb.Infrastructure.Builders.Implementations
         public PsdFileBuilder()
         {
             _sizePolicy = SizePolicyConfig.NotSpecified;
-            _colorMode = ColorMode.RGB;
-            _depth = NumberOfBitsPerChannel._8;
+            _colorMode = Domain.Enums.ColorMode.RGB;
+            _depth = Domain.Enums.NumberOfBitsPerChannel._8;
         }
 
         public IPsdFileBuilder WithWidth(uint width)
@@ -62,14 +62,14 @@ namespace Psb.Infrastructure.Builders.Implementations
             return this;
         }
 
-        public IPsdFileBuilder WithChannelDepth(NumberOfBitsPerChannel depth)
+        public IPsdFileBuilder WithChannelDepth(Domain.Enums.NumberOfBitsPerChannel depth)
         {
             _depth = depth;
 
             return this;
         }
 
-        public IPsdFileBuilder WithColorMode(ColorMode colorMode)
+        public IPsdFileBuilder WithColorMode(Domain.Enums.ColorMode colorMode)
         {
             _colorMode = colorMode;
 
@@ -103,7 +103,10 @@ namespace Psb.Infrastructure.Builders.Implementations
 
         private (uint width, uint height) ComputeSize()
         {
-            if (_layers == null || !_layers.Any()) { return (0, 0); }
+            if (_layers == null || !_layers.Any())
+            {
+                throw new InvalidOperationException("No layer in the file");
+            }
 
             var mergedRectangle = new Rectangle();
 
@@ -119,7 +122,7 @@ namespace Psb.Infrastructure.Builders.Implementations
         {
             var result = new PsdFile();
 
-            if (SizePolicy == SizePolicyConfig.AutomaticAccordingToLayer || SizePolicy == SizePolicyConfig.NotSpecified)
+            if (SizePolicy == SizePolicyConfig.AutomaticAccordingToLayer)
             {
                 var dimensions = ComputeSize();
 

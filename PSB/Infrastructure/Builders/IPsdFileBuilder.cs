@@ -6,9 +6,9 @@ namespace Psb.Infrastructure.Builders
     public interface IPsdFileBuilder
     {
         IPsdFile Build();
-        IPsdFileBuilder WithChannelDepth(NumberOfBitsPerChannel depth);
+        IPsdFileBuilder WithChannelDepth(Domain.Enums.NumberOfBitsPerChannel depth);
         IPsdFileBuilder WithHeight(uint height);
-        IPsdFileBuilder WithColorMode(ColorMode colorMode);
+        IPsdFileBuilder WithColorMode(Domain.Enums.ColorMode colorMode);
         IPsdFileBuilder WithWidth(uint width);
         IPsdFileBuilder WithAutomaticDimensionsFromLayers();
         IPsdFileBuilder WithImagesResources(Action<IImageResourcesBuilder> setup);

@@ -7,8 +7,8 @@ namespace Svg2Psb
         static void Main(string[] args)
         {
             var psdFile = new Psb.Infrastructure.Builders.Implementations.PsdFileBuilder()
-                                    .WithChannelDepth(Psb.Domain.NumberOfBitsPerChannel._8)
-                                    .WithColorMode(Psb.Domain.ColorMode.RGB)
+                                    .WithChannelDepth(Psb.Domain.Enums.NumberOfBitsPerChannel._8)
+                                    .WithColorMode(Psb.Domain.Enums.ColorMode.RGB)
                                     .WithImagesResources(resources =>
                                        {
                                            resources
@@ -32,7 +32,12 @@ namespace Svg2Psb
                                     .WithAutomaticDimensionsFromLayers()
                                     .Build();
 
-            new Psb.Infrastructure.PsdFileWriter().WriteToFile("file.psd", psdFile);
+            new Psb
+                    .Infrastructure
+                    .Stream
+                    .Writer
+                    .PsdFileWriter(new Psb.Infrastructure.Stream.Writer.Implementations.SectionWriterFactory())
+                        .WriteToFile("file.psd", psdFile);
         }
     }
 }
