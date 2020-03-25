@@ -32,7 +32,10 @@ namespace Svg2Psb
                                     .WithAutomaticDimensionsFromLayers()
                                     .Build();
 
-            new Psb.Infrastructure.PsdFileWriter().WriteToFile("file.psd", psdFile);
+            new Psb
+                    .Infrastructure
+                    .PsdFileWriter()
+                    .WriteToFile("file.psd", psdFile);
         }
     }
 }
