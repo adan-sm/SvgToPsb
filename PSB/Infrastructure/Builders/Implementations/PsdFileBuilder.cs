@@ -13,8 +13,8 @@ namespace Psb.Infrastructure.Builders.Implementations
 
         private uint _width = Consts.PsdFile.MinWidth;
         private uint _height = Consts.PsdFile.MinHeight;
-        private ColorMode _colorMode;
-        private NumberOfBitsPerChannel _depth;
+        private Domain.Enums.ColorMode _colorMode;
+        private Domain.Enums.NumberOfBitsPerChannel _depth;
 
         enum SizePolicyConfig
         {
@@ -40,8 +40,8 @@ namespace Psb.Infrastructure.Builders.Implementations
         public PsdFileBuilder()
         {
             _sizePolicy = SizePolicyConfig.NotSpecified;
-            _colorMode = ColorMode.RGB;
-            _depth = NumberOfBitsPerChannel._8;
+            _colorMode = Domain.Enums.ColorMode.RGB;
+            _depth = Domain.Enums.NumberOfBitsPerChannel._8;
         }
 
         public IPsdFileBuilder WithWidth(uint width)
@@ -62,14 +62,14 @@ namespace Psb.Infrastructure.Builders.Implementations
             return this;
         }
 
-        public IPsdFileBuilder WithChannelDepth(NumberOfBitsPerChannel depth)
+        public IPsdFileBuilder WithChannelDepth(Domain.Enums.NumberOfBitsPerChannel depth)
         {
             _depth = depth;
 
             return this;
         }
 
-        public IPsdFileBuilder WithColorMode(ColorMode colorMode)
+        public IPsdFileBuilder WithColorMode(Domain.Enums.ColorMode colorMode)
         {
             _colorMode = colorMode;
 

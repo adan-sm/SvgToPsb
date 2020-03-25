@@ -10,6 +10,6 @@ namespace Psb.Infrastructure.Builders
 
         ILayerBuilder WithImage(Bitmap bitmap);
 
-        ILayerBuilder WithBlendMode(Domain.BlendModeKey blendMode);
+        ILayerBuilder WithBlendMode(Domain.Enums.BlendModeKey blendMode);
     }
 }

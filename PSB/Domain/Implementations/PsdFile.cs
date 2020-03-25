@@ -1,11 +1,24 @@
-﻿using System;
+﻿using Psb.Domain.Enums;
+using System;
 
 namespace Psb.Domain
 {
     internal class PsdFile : IPsdFile
     {
+        private readonly IFileModeComputer _fileModeComputer;
+
         private uint _width;
         private uint _height;
+
+        public PsdFile() 
+            : this(null)
+        {
+        }
+
+        public PsdFile(IFileModeComputer fileModeComputer)
+        {
+            _fileModeComputer = fileModeComputer ?? new Implementations.FileModeComputer();
+        }
 
         public uint Width
         {
@@ -45,13 +58,19 @@ namespace Psb.Domain
             }
         }
 
-        public NumberOfBitsPerChannel Depth
+        public Enums.NumberOfBitsPerChannel Depth
         {
             get;
             internal set;
         }
 
-        public ColorMode ColorMode
+        public Enums.ColorMode ColorMode
+        {
+            get;
+            internal set;
+        }
+
+        public ushort ChannelCount
         {
             get;
             internal set;
@@ -60,5 +79,7 @@ namespace Psb.Domain
         public IColorModeData ColorModeData => throw new NotImplementedException();
 
         public IImageResourceList ImageResources => throw new NotImplementedException();
+
+        public FileMode FileMode => _fileModeComputer.GetFileMode(this);
     }
 }

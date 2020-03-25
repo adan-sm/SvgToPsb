@@ -1,8 +1,8 @@
 ﻿namespace Psb.Domain.Enums
 {
-    public enum FileMode
+    public enum FileMode : ushort
     {
-        RegularFile,
-        BigFile
+        RegularFile = 1,
+        BigFile = 2
     }
 }
