@@ -34,8 +34,10 @@ namespace Svg2Psb
 
             new Psb
                     .Infrastructure
-                    .PsdFileWriter()
-                    .WriteToFile("file.psd", psdFile);
+                    .Stream
+                    .Writer
+                    .PsdFileWriter(new Psb.Infrastructure.Stream.Writer.Implementations.SectionWriterFactory())
+                        .WriteToFile("file.psd", psdFile);
         }
     }
 }

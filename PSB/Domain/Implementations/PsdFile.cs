@@ -46,5 +46,9 @@ namespace Psb.Domain
             get;
             internal set;
         }
+
+        public IColorModeData ColorModeData => throw new NotImplementedException();
+
+        public IImageResourceList ImageResources => throw new NotImplementedException();
     }
 }
