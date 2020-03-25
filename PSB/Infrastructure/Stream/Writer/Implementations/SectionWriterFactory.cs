@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Psb.Domain;
+using System;
 
 namespace Psb.Infrastructure.Stream.Writer.Implementations
 {
@@ -7,9 +8,14 @@ namespace Psb.Infrastructure.Stream.Writer.Implementations
     /// </summary>
     public class SectionWriterFactory : ISectionWriterFactory
     {
-        public ISectionWriter<T> Get<T>(IBinaryWriter binaryWriter, T section)
+        public ISectionWriter Get<T>(IBinaryWriter binaryWriter, T section)
         {
-            throw new NotImplementedException();
+            switch(section)
+            {
+                case IPsdFile psdFile: return new SectionWriters.Implementations.FileHeaderSectionWriter(binaryWriter, psdFile);
+            }
+
+            throw new ArgumentException("Unable to get a section writer for given type");
         }
     }
 }

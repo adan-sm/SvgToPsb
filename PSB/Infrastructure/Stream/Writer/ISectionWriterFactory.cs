@@ -2,6 +2,6 @@
 {
     public interface ISectionWriterFactory
     {
-        ISectionWriter<T> Get<T>(IBinaryWriter binaryWriter, T section);
+        ISectionWriter Get<T>(IBinaryWriter binaryWriter, T section);
     }
 }

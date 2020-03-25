@@ -11,8 +11,8 @@ namespace Psb.Infrastructure.Builders.Implementations
         private Domain.IImageResourceList _imageRessources;
         private Domain.ILayerList _layers;
 
-        private uint _width;
-        private uint _height;
+        private uint _width = Consts.PsdFile.MinWidth;
+        private uint _height = Consts.PsdFile.MinHeight;
         private ColorMode _colorMode;
         private NumberOfBitsPerChannel _depth;
 
@@ -103,7 +103,10 @@ namespace Psb.Infrastructure.Builders.Implementations
 
         private (uint width, uint height) ComputeSize()
         {
-            if (_layers == null || !_layers.Any()) { return (0, 0); }
+            if (_layers == null || !_layers.Any())
+            {
+                throw new InvalidOperationException("No layer in the file");
+            }
 
             var mergedRectangle = new Rectangle();
 
@@ -119,7 +122,7 @@ namespace Psb.Infrastructure.Builders.Implementations
         {
             var result = new PsdFile();
 
-            if (SizePolicy == SizePolicyConfig.AutomaticAccordingToLayer || SizePolicy == SizePolicyConfig.NotSpecified)
+            if (SizePolicy == SizePolicyConfig.AutomaticAccordingToLayer)
             {
                 var dimensions = ComputeSize();
 

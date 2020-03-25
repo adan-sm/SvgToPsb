@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -93,12 +94,6 @@ namespace Psb.Tests.Infrastructure.Builders
         {
             new LayerTestCase
             {
-                ExpectedWidth = 0,
-                ExpectedHeight = 0,
-                LayersRectangles = new List<Psb.Domain.Rectangle>()
-            },
-            new LayerTestCase
-            {
                 ExpectedWidth = 10,
                 ExpectedHeight = 10,
                 LayersRectangles = new List<Psb.Domain.Rectangle>
@@ -168,6 +163,22 @@ namespace Psb.Tests.Infrastructure.Builders
             // assert
             Assert.AreEqual(layerTestsCase.ExpectedWidth, result.Width);
             Assert.AreEqual(layerTestsCase.ExpectedHeight, result.Height);
+        }
+
+        [Test]
+        public void WithAutomaticDimensionsFromLayersOrNotSpecified_ThrowsException_WhenCalledWithNoLayer()
+        {
+            // arrange
+            var sut = new Psb.Infrastructure.Builders.Implementations.PsdFileBuilder();
+            sut.WithAutomaticDimensionsFromLayers();
+
+            var method = new TestDelegate(() => sut.Build());
+
+            // act
+            var result = Assert.Throws<InvalidOperationException>(method);
+
+            // assert
+            Assert.IsTrue(result.Message.StartsWith("No layer in the file"));
         }
     }
 }
