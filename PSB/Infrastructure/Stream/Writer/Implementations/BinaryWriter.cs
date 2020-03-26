@@ -4,30 +4,32 @@ using System.IO;
 
 namespace Psb.Infrastructure.Stream.Writer
 {
-    class BinaryWriter : IDisposable, IBinaryWriter
+    internal class BinaryWriter : IDisposable, IBinaryWriter
     {
-        private FileStream file;
+        private readonly FileStream _file;
 
         public BinaryWriter(FileStream file)
         {
-            this.file = file;
+            _file = file;
         }
+
+        public long Position => _file.Position;
 
         public void Dispose()
         {
-            file.Dispose();
+            _file.Dispose();
         }
 
         public void WriteAsciiCharacters(string value)
         {
             var data = System.Text.Encoding.ASCII.GetBytes(value);
 
-            file.Write(data, 0, data.Length);
+            _file.Write(data, 0, data.Length);
         }
 
         public void WriteBytes(byte[] value)
         {
-            file.Write(value, 0, value.Length);
+            _file.Write(value, 0, value.Length);
         }
 
         public void WriteEnum16<T>(T enumValue) where T : Enum
@@ -47,7 +49,7 @@ namespace Psb.Infrastructure.Stream.Writer
 
             BinaryPrimitives.WriteInt16BigEndian(span, value);
 
-            file.Write(bytes, 0, sizeof(short));
+            _file.Write(bytes, 0, sizeof(short));
         }
 
         public void WriteInt32(int value)
@@ -57,7 +59,7 @@ namespace Psb.Infrastructure.Stream.Writer
 
             BinaryPrimitives.WriteInt32BigEndian(span, value);
 
-            file.Write(bytes, 0, sizeof(int));
+            _file.Write(bytes, 0, sizeof(int));
         }
 
         public void WriteUInt16(ushort value)
@@ -67,7 +69,7 @@ namespace Psb.Infrastructure.Stream.Writer
 
             BinaryPrimitives.WriteUInt16BigEndian(span, value);
 
-            file.Write(bytes, 0, sizeof(ushort));
+            _file.Write(bytes, 0, sizeof(ushort));
         }
 
         public void WriteUInt32(uint value)
@@ -77,7 +79,7 @@ namespace Psb.Infrastructure.Stream.Writer
 
             BinaryPrimitives.WriteUInt32BigEndian(span, value);
 
-            file.Write(bytes, 0, sizeof(uint));
+            _file.Write(bytes, 0, sizeof(uint));
         }
 
         public void WriteUnicodeString(string value)
@@ -87,6 +89,11 @@ namespace Psb.Infrastructure.Stream.Writer
             var data = System.Text.Encoding.BigEndianUnicode.GetBytes(value);
 
             WriteBytes(data);
+        }
+
+        public void Seek(long offset)
+        {
+            _file.Seek(offset, SeekOrigin.Begin);
         }
     }
 }

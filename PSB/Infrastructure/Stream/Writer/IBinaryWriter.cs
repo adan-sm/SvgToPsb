@@ -4,6 +4,8 @@ namespace Psb.Infrastructure.Stream.Writer
 {
     public interface IBinaryWriter
     {
+        long Position { get; }
+
         /// <summary>
         /// Writes a unicode string, with leading size on 4 bytes
         /// </summary>
@@ -30,5 +32,7 @@ namespace Psb.Infrastructure.Stream.Writer
         void WriteEnum16<T>(T enumValue) where T : Enum;
 
         void WriteEnum32<T>(T enumValue) where T : Enum;
+
+        void Seek(long offset);
     }
 }
