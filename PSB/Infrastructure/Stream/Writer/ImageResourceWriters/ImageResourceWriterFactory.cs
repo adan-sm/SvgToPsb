@@ -9,7 +9,7 @@ namespace Psb.Infrastructure.Stream.Writer.ImageResourceWriters
         {
             switch(imageResource.Id)
             {
-                case Psb.Domain.ImageResources.ImageResourcesId.PS6_VersionInfo: return new VersionInfoWriter();
+                case Psb.Domain.ImageResources.ImageResourcesId.PS6_VersionInfo: return new VersionInfoWriter(imageResource);
             }
 
             throw new NotImplementedException();

@@ -12,6 +12,8 @@ namespace Psb.Infrastructure.Stream.Writer
         /// <param name="value"></param>
         void WriteUnicodeString(string value);
 
+        void WritePascalString(string imageResourceName);
+
         /// <summary>
         /// Writes an array of characters as bytes, with no leading size.
         /// Basically, it's equivalent to a WriteBytes()

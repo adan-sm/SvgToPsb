@@ -91,6 +91,11 @@ namespace Psb.Infrastructure.Stream.Writer
             WriteBytes(data);
         }
 
+        public void WritePascalString(string imageResourceName)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Seek(long offset)
         {
             _file.Seek(offset, SeekOrigin.Begin);
