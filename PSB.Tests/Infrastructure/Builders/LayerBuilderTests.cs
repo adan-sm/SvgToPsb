@@ -109,7 +109,7 @@ namespace Psb.Tests.Infrastructure.Builders
         }
 
         [Test]
-        public void WithWithRectangle_ShouldSetRectangle_WhenCalled()
+        public void WithRectangle_ShouldSetRectangle_WhenCalled()
         {
             // arrange
             var rectangle = new Psb.Domain.Rectangle { Bottom = 1, Left = 2, Right = 3, Top = 4 };
