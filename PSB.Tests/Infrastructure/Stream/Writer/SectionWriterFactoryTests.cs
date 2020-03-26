@@ -47,7 +47,7 @@ namespace Psb.Tests.Infrastructure.Stream.Writer
         }
 
         [Test]
-        public void Get_ShouldThrownArgumentException_WhenCalledWithObject()
+        public void Get_ShouldThrowArgumentException_WhenCalledWithObject()
         {
             // arrange
             var obj = new object();
