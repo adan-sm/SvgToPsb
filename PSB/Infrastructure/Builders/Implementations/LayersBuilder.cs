@@ -20,6 +20,7 @@ namespace Psb.Infrastructure.Builders.Implementations
         public ILayerBuilder CreateLayer()
         {
             var result = new LayerBuilder(_owner);
+            
             _layersBuilder.Add(result);
 
             return result;
@@ -33,5 +34,7 @@ namespace Psb.Infrastructure.Builders.Implementations
 
             return result;
         }
+
+        internal IReadOnlyList<LayerBuilder> LayerBuilders => _layersBuilder.AsReadOnly();
     }
 }
