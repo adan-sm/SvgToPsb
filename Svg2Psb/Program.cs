@@ -16,19 +16,19 @@ namespace Svg2Psb
                                             .Add();
                                        })
                                     .WithLayers( builder =>
-                                    {
-                                        builder
-                                            .CreateLayer()
-                                            .WithImage(null)
-                                            .WithName("Background")
-                                            .WithRectangle(new Psb.Domain.Rectangle());
+                                        {
+                                            builder
+                                                .CreateLayer()
+                                                .WithImage(null)
+                                                .WithName("Background")
+                                                .WithRectangle(new Psb.Domain.Rectangle());
 
-                                        builder
-                                            .CreateLayer()
-                                            .WithImage(null)
-                                            .WithName("Character")
-                                            .WithRectangle(new Psb.Domain.Rectangle());
-                                    })
+                                            builder
+                                                .CreateLayer()
+                                                .WithImage(null)
+                                                .WithName("Character")
+                                                .WithRectangle(new Psb.Domain.Rectangle());
+                                        })
                                     .WithAutomaticDimensionsFromLayers()
                                     .Build();
 

@@ -1,0 +1,61 @@
+﻿using Psb.Domain;
+using Psb.Domain.Enums;
+using System;
+using System.Drawing;
+
+namespace Psb.Infrastructure.Builders.Implementations
+{
+    /// <summary>
+    /// TODO : remove "public"
+    /// </summary>
+    public class LayerBuilder : ILayerBuilder
+    {
+        private readonly Domain.IPsdFile _owner;
+        private BlendModeKey _blendModeKey;
+        private string _name;
+        private Domain.Rectangle _rectangle;
+
+        public LayerBuilder(IPsdFile owner)
+        {
+            _owner = owner ?? throw new ArgumentNullException(nameof(owner));
+        }
+
+        public ILayerBuilder WithBlendMode(BlendModeKey blendMode)
+        {
+            _blendModeKey = blendMode;
+
+            return this;
+        }
+
+        public ILayerBuilder WithImage(Bitmap bitmap)
+        {
+
+
+            return this;
+        }
+
+        public ILayerBuilder WithName(string name)
+        {
+
+
+            return this;
+        }
+
+        public ILayerBuilder WithRectangle(Domain.Rectangle rectangle)
+        {
+
+            return this;
+        }
+
+        internal Domain.ILayer GetLayer()
+        {
+            return new Psb.Domain.Implementations.Layer
+            {
+                BlendMode = _blendModeKey,
+                Name = _name,
+                Rectangle = _rectangle,
+                Owner = _owner
+            };
+        }
+    }
+}
