@@ -85,7 +85,7 @@ namespace Psb.Tests.Infrastructure.Builders
             var result = sut.GetLayer();
 
             // assert
-            Assert.AreEqual(bitmap, result.GetImage());
+            Assert.AreSame(bitmap, result.GetImage());
 
             bitmap.Dispose();
         }
