@@ -23,7 +23,7 @@ namespace Psb.Tests.Infrastructure.Builders
         }
 
         [Test]
-        public void CreateLayer_ShouldAddOnLayerBuilderAndReturnsIt_WhenCalled()
+        public void CreateLayer_ShouldAddOneLayerBuilderAndReturnsIt_WhenCalled()
         {
             // arrange
             var psdFile = new Psb.Domain.PsdFile();
