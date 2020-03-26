@@ -1,4 +1,6 @@
-﻿namespace Psb.Infrastructure.Builders
+﻿using System.Collections;
+
+namespace Psb.Infrastructure.Builders
 {
     public interface ILayersBuilder
     {

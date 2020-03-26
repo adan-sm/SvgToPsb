@@ -8,8 +8,9 @@ namespace Psb.Infrastructure.Builders.Implementations
     public class PsdFileBuilder : IPsdFileBuilder
     {
         private SizePolicyConfig _sizePolicy;
-        private Domain.IImageResourceList _imageRessources;
-        private Domain.ILayerList _layers;
+
+        private Action<ILayersBuilder> _layersBuilderAction;
+        private Action<IImageResourcesBuilder> _imageResourcesBuilderAction;
 
         private uint _width = Consts.PsdFile.MinWidth;
         private uint _height = Consts.PsdFile.MinHeight;
@@ -79,18 +80,14 @@ namespace Psb.Infrastructure.Builders.Implementations
 
         public IPsdFileBuilder WithImagesResources(Action<IImageResourcesBuilder> setup)
         {
-            IImageResourcesBuilder imageResourcesBuilder = new ImageResourcesBuilder();
-
-            setup(imageResourcesBuilder);
-
-            _imageRessources = imageResourcesBuilder.Get();
+            _imageResourcesBuilderAction = setup;
 
             return this;
         }
 
         public IPsdFileBuilder WithLayers(Action<ILayersBuilder> builder)
         {
-            
+            _layersBuilderAction = builder;
 
             return this;
         }
@@ -102,16 +99,16 @@ namespace Psb.Infrastructure.Builders.Implementations
             return this;
         }
 
-        private (uint width, uint height) ComputeSize()
+        private (uint width, uint height) ComputeSize(Domain.ILayerList layers)
         {
-            if (_layers == null || !_layers.Any())
+            if (layers == null || !layers.Any())
             {
                 throw new InvalidOperationException("No layer in the file");
             }
 
             var mergedRectangle = new Rectangle();
 
-            foreach (var currentLayer in _layers)
+            foreach (var currentLayer in layers)
             {
                 mergedRectangle = Rectangle.Merge(mergedRectangle, currentLayer.Rectangle);
             }
@@ -123,9 +120,11 @@ namespace Psb.Infrastructure.Builders.Implementations
         {
             var result = new PsdFile();
 
+            var layers = GetLayers(result);
+
             if (SizePolicy == SizePolicyConfig.AutomaticAccordingToLayer)
             {
-                var dimensions = ComputeSize();
+                var dimensions = ComputeSize(layers);
 
                 result.Width = dimensions.width;
                 result.Height = dimensions.height;
@@ -143,16 +142,35 @@ namespace Psb.Infrastructure.Builders.Implementations
             return result;
         }
 
+        private ILayerList GetLayers(PsdFile result)
+        {
+            if (Layers != null)
+            {
+                return Layers;
+            }
+            else if (_layersBuilderAction != null)
+            {
+                var layersBuilder = new LayersBuilder(result);
+                _layersBuilderAction(layersBuilder);
+
+                return layersBuilder.GetLayers();
+            }
+
+            return new Domain.Implementations.LayerList();
+        }
+
         // test purposes only
         internal IImageResourceList ImageResourceList
         {
-            set => _imageRessources = value;
+            get;
+            set;
         }
 
         // test purposes only
         internal ILayerList Layers
         {
-            set => _layers = value;
+            get;
+            set;
         }
     }
 }
