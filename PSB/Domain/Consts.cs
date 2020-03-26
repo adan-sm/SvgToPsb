@@ -19,5 +19,10 @@
             public const Enums.ColorMode DefaultColorMode = Enums.ColorMode.Bitmap;
             public const Enums.NumberOfBitsPerChannel DefaultDepth = Enums.NumberOfBitsPerChannel._8;
         }
+
+        public static class Layer
+        {
+            public const Psb.Domain.Enums.BlendModeKey DefaultBlendModeKey = Enums.BlendModeKey.Normal;
+        }
     }
 }

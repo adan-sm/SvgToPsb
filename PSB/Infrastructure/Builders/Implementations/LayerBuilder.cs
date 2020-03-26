@@ -17,6 +17,8 @@ namespace Psb.Infrastructure.Builders.Implementations
 
         public LayerBuilder(IPsdFile owner)
         {
+            _blendModeKey = Consts.Layer.DefaultBlendModeKey;
+
             _owner = owner ?? throw new ArgumentNullException(nameof(owner));
         }
 
@@ -36,13 +38,14 @@ namespace Psb.Infrastructure.Builders.Implementations
 
         public ILayerBuilder WithName(string name)
         {
-
+            _name = name;
 
             return this;
         }
 
         public ILayerBuilder WithRectangle(Domain.Rectangle rectangle)
         {
+            _rectangle = rectangle;
 
             return this;
         }
