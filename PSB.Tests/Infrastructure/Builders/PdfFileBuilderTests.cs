@@ -180,5 +180,34 @@ namespace Psb.Tests.Infrastructure.Builders
             // assert
             Assert.IsTrue(result.Message.StartsWith("No layer in the file"));
         }
+
+        [Test]
+        public void Build_ShouldSetDefaultDepthTo8_WhenCalled()
+        {
+            // arrange
+            var sut = new Psb.Infrastructure.Builders.Implementations.PsdFileBuilder();
+
+            // act
+            var result = sut.Build();
+
+            // assert
+            Assert.AreEqual(Psb.Domain.Enums.NumberOfBitsPerChannel._8, result.Depth);
+        }
+
+        [Test]
+        public void Build_ShouldSetDefaultColorModeToBitmapAndSpecifyCorrectColorModeData_WhenCalled()
+        {
+            // arrange
+            var sut = new Psb.Infrastructure.Builders.Implementations.PsdFileBuilder();
+
+            // act
+            var result = sut.Build();
+
+            // assert
+            Assert.AreEqual(Psb.Domain.Enums.ColorMode.Bitmap, result.ColorMode);
+            Assert.IsNotNull(result.ColorModeData);
+            Assert.IsInstanceOf<Psb.Domain.Implementations.ColorModeData>(result.ColorModeData);
+            Assert.AreEqual(result, result.ColorModeData.Owner);
+        }
     }
 }

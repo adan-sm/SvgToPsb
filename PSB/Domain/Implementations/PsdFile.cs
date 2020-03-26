@@ -90,7 +90,11 @@ namespace Psb.Domain
             }
         }
 
-        public IColorModeData ColorModeData => throw new NotImplementedException();
+        public IColorModeData ColorModeData
+        {
+            get;
+            internal set;
+        }
 
         public IImageResourceList ImageResources => throw new NotImplementedException();
 

@@ -15,6 +15,9 @@
 
             public const ushort MinChannelCount = 1;
             public const ushort MaxChannelCount = 56;
+
+            public const Enums.ColorMode DefaultColorMode = Enums.ColorMode.Bitmap;
+            public const Enums.NumberOfBitsPerChannel DefaultDepth = Enums.NumberOfBitsPerChannel._8;
         }
     }
 }

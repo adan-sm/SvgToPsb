@@ -40,8 +40,9 @@ namespace Psb.Infrastructure.Builders.Implementations
         public PsdFileBuilder()
         {
             _sizePolicy = SizePolicyConfig.NotSpecified;
-            _colorMode = Domain.Enums.ColorMode.RGB;
-            _depth = Domain.Enums.NumberOfBitsPerChannel._8;
+
+            _colorMode = Consts.PsdFile.DefaultColorMode;
+            _depth = Consts.PsdFile.DefaultDepth;
         }
 
         public IPsdFileBuilder WithWidth(uint width)
@@ -137,6 +138,7 @@ namespace Psb.Infrastructure.Builders.Implementations
 
             result.Depth = _depth;
             result.ColorMode = _colorMode;
+            result.ColorModeData = new Domain.Implementations.ColorModeData { Owner = result };
 
             return result;
         }

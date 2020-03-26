@@ -2,5 +2,6 @@
 {
     public interface IColorModeData
     {
+        IPsdFile Owner { get; }
     }
 }
