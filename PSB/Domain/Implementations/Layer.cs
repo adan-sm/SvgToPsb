@@ -9,6 +9,8 @@ namespace Psb.Domain.Implementations
     /// </summary>
     public class Layer : ILayer
     {
+        private Bitmap _image;
+
         public string Name
         {
             get;
@@ -41,7 +43,12 @@ namespace Psb.Domain.Implementations
 
         public void SetImage(Bitmap bitmap)
         {
-            throw new NotImplementedException();
+            _image = bitmap;
+        }
+
+        public Bitmap GetImage()
+        {
+            return _image;
         }
     }
 }

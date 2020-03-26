@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 
 namespace Psb.Tests.Infrastructure.Builders
 {
@@ -9,6 +10,22 @@ namespace Psb.Tests.Infrastructure.Builders
     [ExcludeFromCodeCoverage]
     public class LayerBuilderTests
     {
+        [Test]
+        public void Build_ShouldReturnCorrectInstance_WhenCalled()
+        {
+            // arrange
+            var psdFile = Builder<Psb.Domain.PsdFile>
+                            .CreateNew()
+                            .Build();
+            var sut = new Psb.Infrastructure.Builders.Implementations.LayerBuilder(psdFile);
+
+            // act
+            var result = sut.GetLayer();
+
+            // assert
+            Assert.IsInstanceOf<Psb.Domain.Implementations.Layer>(result);
+        }
+
         [TestCase(Psb.Domain.Enums.BlendModeKey.Color)]
         [TestCase(Psb.Domain.Enums.BlendModeKey.ColorBurn)]
         [TestCase(Psb.Domain.Enums.BlendModeKey.ColorDodge)]
@@ -56,7 +73,21 @@ namespace Psb.Tests.Infrastructure.Builders
         [Test]
         public void WithImage_ShouldSetImage_WhenCalled()
         {
-            throw new NotImplementedException();
+            // arrange
+            var psdFile = Builder<Psb.Domain.PsdFile>
+                            .CreateNew()
+                            .Build();
+            var bitmap = new Bitmap(10, 10);
+            var sut = new Psb.Infrastructure.Builders.Implementations.LayerBuilder(psdFile);
+
+            // act
+            sut.WithImage(bitmap);
+            var result = sut.GetLayer();
+
+            // assert
+            Assert.AreEqual(bitmap, result.GetImage());
+
+            bitmap.Dispose();
         }
 
         [Test]

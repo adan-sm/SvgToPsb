@@ -15,5 +15,7 @@ namespace Psb.Domain
         IChannelList Channels { get; }
 
         void SetImage(Bitmap bitmap);
+
+        Bitmap GetImage();
     }
 }

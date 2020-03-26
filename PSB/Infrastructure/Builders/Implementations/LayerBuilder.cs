@@ -14,6 +14,7 @@ namespace Psb.Infrastructure.Builders.Implementations
         private BlendModeKey _blendModeKey;
         private string _name;
         private Domain.Rectangle _rectangle;
+        private Bitmap _bitmap;
 
         public LayerBuilder(IPsdFile owner)
         {
@@ -31,7 +32,7 @@ namespace Psb.Infrastructure.Builders.Implementations
 
         public ILayerBuilder WithImage(Bitmap bitmap)
         {
-
+            _bitmap = bitmap;
 
             return this;
         }
@@ -52,13 +53,17 @@ namespace Psb.Infrastructure.Builders.Implementations
 
         internal Domain.ILayer GetLayer()
         {
-            return new Psb.Domain.Implementations.Layer
+            var result = new Domain.Implementations.Layer
             {
                 BlendMode = _blendModeKey,
                 Name = _name,
                 Rectangle = _rectangle,
                 Owner = _owner
             };
+
+            result.SetImage(_bitmap);
+
+            return result;
         }
     }
 }
