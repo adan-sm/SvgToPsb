@@ -12,7 +12,8 @@ namespace Psb.Infrastructure.Stream.Writer.Implementations
         {
             switch(section)
             {
-                case IPsdFile psdFile: return new SectionWriters.Implementations.FileHeaderSectionWriter(binaryWriter, psdFile);
+                case IPsdFile psdFile:                  return new SectionWriters.Implementations.FileHeaderSectionWriter(binaryWriter, psdFile);
+                case IColorModeData colorModeData:      return new SectionWriters.Implementations.ColorModeDataSectionWriter(binaryWriter, colorModeData);
             }
 
             throw new ArgumentException("Unable to get a section writer for given type");
