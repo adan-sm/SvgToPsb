@@ -47,6 +47,22 @@ namespace Psb.Tests.Infrastructure.Stream.Writer
         }
 
         [Test]
+        public void Get_ShouldReturnImageResourcesSectionWriter_WhenCalledWithImageResources()
+        {
+            // arrange
+            var binaryWriter = Moq.Mock.Of<Psb.Infrastructure.Stream.Writer.IBinaryWriter>();
+            var imageResources = Moq.Mock.Of<Psb.Domain.IImageResourceList>();
+                        
+            var sut = new Psb.Infrastructure.Stream.Writer.Implementations.SectionWriterFactory();
+
+            // act
+            var result = sut.Get(binaryWriter, imageResources);
+
+            // assert
+            Assert.IsInstanceOf<Psb.Infrastructure.Stream.Writer.SectionWriters.IImageResourcesWriter>(result);
+        }
+
+        [Test]
         public void Get_ShouldThrowArgumentException_WhenCalledWithObject()
         {
             // arrange

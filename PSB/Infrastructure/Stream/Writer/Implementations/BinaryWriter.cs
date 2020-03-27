@@ -4,30 +4,40 @@ using System.IO;
 
 namespace Psb.Infrastructure.Stream.Writer
 {
-    class BinaryWriter : IDisposable, IBinaryWriter
+    internal class BinaryWriter : IDisposable, IBinaryWriter
     {
-        private FileStream file;
+        private readonly FileStream _file;
+        private readonly IPaddingComputer _paddingComputer;
 
         public BinaryWriter(FileStream file)
+            : this(file, null)
         {
-            this.file = file;
+
         }
+
+        public BinaryWriter(FileStream file, IPaddingComputer paddingComputer)
+        {
+            _file = file;
+            _paddingComputer = paddingComputer ?? new Implementations.PaddingComputer();
+        }
+
+        public long Position => _file.Position;
 
         public void Dispose()
         {
-            file.Dispose();
+            _file.Dispose();
         }
 
         public void WriteAsciiCharacters(string value)
         {
             var data = System.Text.Encoding.ASCII.GetBytes(value);
 
-            file.Write(data, 0, data.Length);
+            _file.Write(data, 0, data.Length);
         }
 
         public void WriteBytes(byte[] value)
         {
-            file.Write(value, 0, value.Length);
+            _file.Write(value, 0, value.Length);
         }
 
         public void WriteEnum16<T>(T enumValue) where T : Enum
@@ -40,6 +50,11 @@ namespace Psb.Infrastructure.Stream.Writer
             WriteUInt32(Convert.ToUInt32(enumValue));
         }
 
+        public void WriteByte(byte value)
+        {
+            _file.WriteByte(value);
+        }
+
         public void WriteInt16(short value)
         {
             var bytes = new byte[sizeof(short)];
@@ -47,7 +62,7 @@ namespace Psb.Infrastructure.Stream.Writer
 
             BinaryPrimitives.WriteInt16BigEndian(span, value);
 
-            file.Write(bytes, 0, sizeof(short));
+            _file.Write(bytes, 0, sizeof(short));
         }
 
         public void WriteInt32(int value)
@@ -57,7 +72,7 @@ namespace Psb.Infrastructure.Stream.Writer
 
             BinaryPrimitives.WriteInt32BigEndian(span, value);
 
-            file.Write(bytes, 0, sizeof(int));
+            _file.Write(bytes, 0, sizeof(int));
         }
 
         public void WriteUInt16(ushort value)
@@ -67,7 +82,7 @@ namespace Psb.Infrastructure.Stream.Writer
 
             BinaryPrimitives.WriteUInt16BigEndian(span, value);
 
-            file.Write(bytes, 0, sizeof(ushort));
+            _file.Write(bytes, 0, sizeof(ushort));
         }
 
         public void WriteUInt32(uint value)
@@ -77,7 +92,12 @@ namespace Psb.Infrastructure.Stream.Writer
 
             BinaryPrimitives.WriteUInt32BigEndian(span, value);
 
-            file.Write(bytes, 0, sizeof(uint));
+            _file.Write(bytes, 0, sizeof(uint));
+        }
+
+        public void WriteBool(bool value)
+        {
+            _file.WriteByte(Convert.ToByte(value));
         }
 
         public void WriteUnicodeString(string value)
@@ -87,6 +107,38 @@ namespace Psb.Infrastructure.Stream.Writer
             var data = System.Text.Encoding.BigEndianUnicode.GetBytes(value);
 
             WriteBytes(data);
+        }
+
+        public void WritePascalString(string value, int padMultiple = 2)
+        {
+            if (value.Length > byte.MaxValue)
+            {
+                throw new ArgumentException($"'{value}' length is too long, max {byte.MaxValue}");
+            }
+
+            var position = _file.Position;
+            var length = (byte)value.Length;
+            var bytes = System.Text.Encoding.ASCII.GetBytes(value);
+
+            WriteByte(length);
+            WriteBytes(bytes);
+            WritePadding(position, padMultiple);
+        }
+
+        public void Seek(long offset)
+        {
+            _file.Seek(offset, SeekOrigin.Begin);
+        }
+
+        public void WritePadding(long startPosition, int padMultiple)
+        {
+            var length = _file.Position - startPosition;
+            var padding = _paddingComputer.GetPadding(length, padMultiple);
+
+            for (int i = 0; i < padding; i++)
+            {
+                WriteByte(0);
+            }
         }
     }
 }

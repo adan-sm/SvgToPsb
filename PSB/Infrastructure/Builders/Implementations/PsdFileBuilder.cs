@@ -139,7 +139,22 @@ namespace Psb.Infrastructure.Builders.Implementations
             result.ColorMode = _colorMode;
             result.ColorModeData = new Domain.Implementations.ColorModeData { Owner = result };
 
+            result.ImageResources = GetImageResources();
+
             return result;
+        }
+
+        private IImageResourceList GetImageResources()
+        {
+            if (_imageResourcesBuilderAction != null)
+            {
+                var imageResourceBuilder = new Implementations.ImageResourcesBuilder();
+                _imageResourcesBuilderAction(imageResourceBuilder);
+
+                return imageResourceBuilder.Get();
+            }
+
+            return new Domain.Implementations.ImageResourceList();
         }
 
         private ILayerList GetLayers(PsdFile result)

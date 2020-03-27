@@ -12,8 +12,7 @@ namespace Svg2Psb
                                     .WithImagesResources(resources =>
                                        {
                                            resources
-                                            .Add()
-                                            .Add();
+                                            .Add(Psb.Domain.ImageResources.Implementations.VersionInfo.CreateDefaultVersionInfo());
                                        })
                                     .WithLayers( builder =>
                                         {
