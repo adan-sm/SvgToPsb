@@ -96,7 +96,11 @@ namespace Psb.Domain
             internal set;
         }
 
-        public IImageResourceList ImageResources => throw new NotImplementedException();
+        public IImageResourceList ImageResources
+        {
+            get;
+            internal set;
+        }
 
         public FileMode FileMode => _fileModeComputer.GetFileMode(this);
     }

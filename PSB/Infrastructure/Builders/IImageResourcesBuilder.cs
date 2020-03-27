@@ -2,7 +2,7 @@
 {
     public interface IImageResourcesBuilder
     {
-        IImageResourcesBuilder Add();
+        IImageResourcesBuilder Add(Domain.IImageResource imageResource);
 
         Domain.IImageResourceList Get();
     }
