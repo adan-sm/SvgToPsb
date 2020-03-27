@@ -48,8 +48,6 @@ namespace Psb.Tests.Infrastructure.Stream.Writer
         {
             for (int i = 0; i < values.Length; i++)
             {
-                System.Diagnostics.Debug.WriteLine(values[i]);
-
                 yield return values[i];
             }
         }
