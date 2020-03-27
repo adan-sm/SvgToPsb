@@ -63,6 +63,22 @@ namespace Psb.Tests.Infrastructure.Stream.Writer
         }
 
         [Test]
+        public void Get_ShouldReturnLayerListSectionWriter_WhenCalledWithLayerList()
+        {
+            // arrange
+            var binaryWriter = Moq.Mock.Of<Psb.Infrastructure.Stream.Writer.IBinaryWriter>();
+            var layerList = Moq.Mock.Of<Psb.Domain.ILayerList>();
+
+            var sut = new Psb.Infrastructure.Stream.Writer.Implementations.SectionWriterFactory();
+
+            // act
+            var result = sut.Get(binaryWriter, layerList);
+
+            // assert
+            Assert.IsInstanceOf<Psb.Infrastructure.Stream.Writer.SectionWriters.ILayerListSectionWriter>(result);
+        }
+
+        [Test]
         public void Get_ShouldThrowArgumentException_WhenCalledWithObject()
         {
             // arrange
