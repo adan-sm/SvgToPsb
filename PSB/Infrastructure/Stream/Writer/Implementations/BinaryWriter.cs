@@ -7,10 +7,18 @@ namespace Psb.Infrastructure.Stream.Writer
     internal class BinaryWriter : IDisposable, IBinaryWriter
     {
         private readonly FileStream _file;
+        private readonly IPaddingComputer _paddingComputer;
 
         public BinaryWriter(FileStream file)
+            : this(file, null)
+        {
+
+        }
+
+        public BinaryWriter(FileStream file, IPaddingComputer paddingComputer)
         {
             _file = file;
+            _paddingComputer = paddingComputer ?? new Implementations.PaddingComputer();
         }
 
         public long Position => _file.Position;
@@ -40,6 +48,11 @@ namespace Psb.Infrastructure.Stream.Writer
         public void WriteEnum32<T>(T enumValue) where T : Enum
         {
             WriteUInt32(Convert.ToUInt32(enumValue));
+        }
+
+        public void WriteByte(byte value)
+        {
+            _file.WriteByte(value);
         }
 
         public void WriteInt16(short value)
@@ -91,14 +104,36 @@ namespace Psb.Infrastructure.Stream.Writer
             WriteBytes(data);
         }
 
-        public void WritePascalString(string imageResourceName)
+        public void WritePascalString(string value, int padMultiple = 2)
         {
-            throw new NotImplementedException();
+            if (value.Length > byte.MaxValue)
+            {
+                throw new ArgumentException($"'{value}' length is too long, max {byte.MaxValue}");
+            }
+
+            var position = _file.Position;
+            var length = (byte)value.Length;
+            var bytes = System.Text.Encoding.ASCII.GetBytes(value);
+
+            WriteByte(length);
+            WriteBytes(bytes);
+            WritePadding(position, padMultiple);
         }
 
         public void Seek(long offset)
         {
             _file.Seek(offset, SeekOrigin.Begin);
+        }
+
+        public void WritePadding(long startPosition, int padMultiple)
+        {
+            var length = _file.Position - startPosition;
+            var padding = _paddingComputer.GetPadding(length, padMultiple);
+
+            for (int i = 0; i < padding; i++)
+            {
+                WriteByte(0);
+            }
         }
     }
 }

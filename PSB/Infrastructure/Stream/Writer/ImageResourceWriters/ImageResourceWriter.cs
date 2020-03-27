@@ -17,11 +17,14 @@ namespace Psb.Infrastructure.Stream.Writer.ImageResourceWriters
         {
             binaryWriter.WriteAsciiCharacters("8BIM");
             binaryWriter.WriteUInt16(_imageResource.Id);
-            binaryWriter.WritePascalString(_imageResource.Name);
+            binaryWriter.WritePascalString(_imageResource.Name, 2);
 
             using (var blockLength = BlockLengthWriter.CreateBlockLengthWriter(binaryWriter))
             {
+                var position = binaryWriter.Position;
+
                 WriteInternal(binaryWriter);
+                binaryWriter.WritePadding(position, 2);
             }
         }
 

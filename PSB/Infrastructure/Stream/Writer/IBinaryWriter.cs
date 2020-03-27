@@ -12,7 +12,7 @@ namespace Psb.Infrastructure.Stream.Writer
         /// <param name="value"></param>
         void WriteUnicodeString(string value);
 
-        void WritePascalString(string imageResourceName);
+        void WritePascalString(string value, int padMultiple);
 
         /// <summary>
         /// Writes an array of characters as bytes, with no leading size.
@@ -20,6 +20,8 @@ namespace Psb.Infrastructure.Stream.Writer
         /// </summary>
         /// <param name="value"></param>
         void WriteAsciiCharacters(string value);
+
+        void WriteByte(byte value);
 
         void WriteInt16(short value);
 
@@ -36,5 +38,7 @@ namespace Psb.Infrastructure.Stream.Writer
         void WriteEnum32<T>(T enumValue) where T : Enum;
 
         void Seek(long offset);
+
+        void WritePadding(long startPosition, int padMultiple);
     }
 }
