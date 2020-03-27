@@ -3,6 +3,13 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Psb.Tests.Infrastructure.Stream.Writer.ImageResourceWriters
 {
+    public class FakeImageResource : Psb.Domain.IImageResource
+    {
+        public ushort Id { get; set; }
+
+        public string Name { get; set; }
+    }
+
     [TestFixture]
     [ExcludeFromCodeCoverage]
     public class ImageResourceWriterTests
@@ -11,21 +18,17 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.ImageResourceWriters
         public void Write_ShouldWriteBasicInformation_WhenCalled()
         {
             // arrange
-            var binaryWriter = new Moq.Mock<Psb.Infrastructure.Stream.Writer.IBinaryWriter>();
-            var imageResource = new Moq.Mock<Psb.Domain.IImageResource>();
-
             var imageResourceId = (ushort)0xFAC7;
             var imageResourceName = "FakeName";
 
-            imageResource
-                .SetupGet(i => i.Id)
-                .Returns(imageResourceId);
+            var binaryWriter = new Moq.Mock<Psb.Infrastructure.Stream.Writer.IBinaryWriter>();
+            var imageResource = new FakeImageResource
+            {
+                Id = imageResourceId,
+                Name = imageResourceName
+            };
 
-            imageResource
-                .SetupGet(i => i.Name)
-                .Returns(imageResourceName);
-
-            var sut = new Moq.Mock<Psb.Infrastructure.Stream.Writer.ImageResourceWriters.ImageResourceWriter>(imageResource.Object);
+            var sut = new Moq.Mock<Psb.Infrastructure.Stream.Writer.ImageResourceWriters.ImageResourceWriter<FakeImageResource>>(imageResource);
 
             // act
             sut.Object.Write(binaryWriter.Object);

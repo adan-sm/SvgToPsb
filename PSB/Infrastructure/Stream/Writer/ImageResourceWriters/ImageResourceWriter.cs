@@ -4,13 +4,19 @@ using System;
 namespace Psb.Infrastructure.Stream.Writer.ImageResourceWriters
 
 {
-    internal abstract class ImageResourceWriter : IImageResourceWriter
+    internal abstract class ImageResourceWriter<T> : IImageResourceWriter
+        where T : IImageResource
     {
-        private readonly Domain.IImageResource _imageResource;
+        protected readonly T _imageResource;
 
-        protected ImageResourceWriter(IImageResource imageResource)
+        protected ImageResourceWriter(T imageResource)
         {
-            _imageResource = imageResource ?? throw new ArgumentNullException(nameof(imageResource));
+            if (imageResource == null)
+            {
+                throw new ArgumentNullException(nameof(imageResource));
+            }
+
+            _imageResource = imageResource;
         }
 
         public void Write(IBinaryWriter binaryWriter)

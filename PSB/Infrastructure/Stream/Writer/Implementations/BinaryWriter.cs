@@ -95,6 +95,11 @@ namespace Psb.Infrastructure.Stream.Writer
             _file.Write(bytes, 0, sizeof(uint));
         }
 
+        public void WriteBool(bool value)
+        {
+            _file.WriteByte(Convert.ToByte(value));
+        }
+
         public void WriteUnicodeString(string value)
         {
             WriteInt32(value.Length);
