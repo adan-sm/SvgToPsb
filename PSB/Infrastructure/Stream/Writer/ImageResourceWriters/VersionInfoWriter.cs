@@ -10,8 +10,8 @@ namespace Psb.Infrastructure.Stream.Writer.ImageResourceWriters
 
         protected internal override void WriteInternal(IBinaryWriter binaryWriter)
         {
-            binaryWriter.WriteBool(_imageResource.HasRealMergedData);
             binaryWriter.WriteUInt32(_imageResource.Version);
+            binaryWriter.WriteBool(_imageResource.HasRealMergedData);
             binaryWriter.WriteUnicodeString(_imageResource.WriterName);
             binaryWriter.WriteUnicodeString(_imageResource.ReaderName);
             binaryWriter.WriteUInt32(_imageResource.FileVersion);
