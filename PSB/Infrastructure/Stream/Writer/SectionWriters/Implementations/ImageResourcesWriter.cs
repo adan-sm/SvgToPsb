@@ -34,7 +34,7 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
                 foreach(var currentImageResource in _imageResources)
                 {
                     var writer = _factory.Get(currentImageResource);
-                    
+                    writer.Write(_binaryWriter);
                 }
             }
         }
