@@ -37,7 +37,7 @@ namespace Psb.Tests.Infrastructure.Builders
         }
 
         [Test]
-        public void Add_ShouldArgumentNullOperationException_WhenCalledWithNullImageResource()
+        public void Add_ShouldThrowArgumentNullOperationException_WhenCalledWithNullImageResource()
         {
             // arrange
             var sut = new Psb.Infrastructure.Builders.Implementations.ImageResourcesBuilder();
