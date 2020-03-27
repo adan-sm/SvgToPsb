@@ -12,6 +12,10 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
         public Psb.Domain.Enums.BlendModeKey BlendMode { get; set; }
 
         public Psb.Domain.Enums.LayerFlag Flags { get; set; }
+
+        public bool Clipping { get; set; }
+
+        public byte Opacity { get; set; }
     }
 
     [TestFixture]
@@ -26,12 +30,18 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
 
             foreach (var blendMode in blendModes)
             {
-                var testCase = new LayerSectionWriterTestCase
+                for (byte opacity = 0; opacity < byte.MaxValue; opacity++)
                 {
-                    BlendMode = (Psb.Domain.Enums.BlendModeKey)blendMode
-                };
+                    var testCase = new LayerSectionWriterTestCase
+                    {
+                        BlendMode = (Psb.Domain.Enums.BlendModeKey)blendMode,
+                        Rectangle = new Psb.Domain.Rectangle { Bottom = 0, Top = 1, Left = 2, Right = 3 },
+                        Opacity = opacity,
+                        Clipping = true,
+                    };
 
-                testCases.Add(testCase);
+                    testCases.Add(testCase);
+                }
             }
 
             return testCases;
@@ -62,6 +72,10 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
             // TODO : channel writer
             binaryWriter.Verify(b => b.WriteAsciiCharacters("8BIM"), Moq.Times.Once());
             binaryWriter.Verify(b => b.WriteAsciiCharacters(testCase.BlendMode.Description()), Moq.Times.Once());
+            binaryWriter.Verify(b => b.WriteByte(testCase.Opacity), Moq.Times.Once());
+            binaryWriter.Verify(b => b.WriteBool(testCase.Clipping), Moq.Times.Once());
+            // TODO : flags
+            binaryWriter.Verify(b => b.WriteFillers(1), Moq.Times.Once());
         }
     }
 }

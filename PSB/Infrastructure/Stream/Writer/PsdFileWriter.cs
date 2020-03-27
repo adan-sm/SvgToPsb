@@ -50,12 +50,14 @@ namespace Psb.Infrastructure.Stream.Writer
 
         private void WriteLayers(IBinaryWriter binaryWriter, IPsdFile psdFile)
         {
-            throw new NotImplementedException();
+            var layerListSectionWriter = _sectionWriterFactory.Get(binaryWriter, psdFile.Layers);
+            layerListSectionWriter.Write();
         }
 
         private void WriteImageData(IBinaryWriter binaryWriter, IPsdFile psdFile)
         {
-            throw new NotImplementedException();
+            var layerSectionWriter = _sectionWriterFactory.Get(binaryWriter, psdFile.BaseLayer);
+            layerSectionWriter.Write();
         }
     }
 }

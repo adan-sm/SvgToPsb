@@ -140,6 +140,7 @@ namespace Psb.Infrastructure.Builders.Implementations
             result.ColorModeData = new Domain.Implementations.ColorModeData { Owner = result };
 
             result.ImageResources = GetImageResources();
+            result.Layers = layers;
 
             return result;
         }
@@ -171,7 +172,7 @@ namespace Psb.Infrastructure.Builders.Implementations
                 return layersBuilder.GetLayers();
             }
 
-            return new Domain.Implementations.LayerList();
+            return new Domain.Implementations.LayerList(result);
         }
 
         // test purposes only

@@ -10,16 +10,31 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
     {
         private readonly IBinaryWriter _binaryWriter;
         private readonly Psb.Domain.ILayerList _layers;
+        private readonly ISectionWriterFactory _sectionWriterFactory;
 
-        public LayerListSectionWriter(IBinaryWriter binaryWriter, ILayerList layers)
+        public LayerListSectionWriter(IBinaryWriter binaryWriter, ILayerList layers, ISectionWriterFactory sectionWriterFactory = null)
         {
             _binaryWriter = binaryWriter ?? throw new ArgumentNullException(nameof(binaryWriter));
             _layers = layers ?? throw new ArgumentNullException(nameof(layers));
+            _sectionWriterFactory = sectionWriterFactory ?? new Psb.Infrastructure.Stream.Writer.Implementations.SectionWriterFactory();
         }
 
         public void Write()
         {
-            throw new NotImplementedException();
+            using (var blockLength = BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, _layers.Owner.FileMode))
+            {
+                using (var blockLength2 = BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, _layers.Owner.FileMode))
+                {
+                    _binaryWriter.WriteUInt16((ushort)_layers.Count);
+
+                    foreach (var currentLayer in _layers)
+                    {
+                        _sectionWriterFactory
+                            .Get(_binaryWriter, currentLayer)
+                            .Write();
+                    }
+                }
+            }
         }
     }
 }

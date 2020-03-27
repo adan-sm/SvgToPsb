@@ -9,10 +9,14 @@ namespace Psb.Domain.Implementations
     /// </summary>
     public class LayerList : List<ILayer>, ILayerList
     {
+        public LayerList(IPsdFile owner)
+        {
+            Owner = owner ?? throw new ArgumentNullException(nameof(owner));
+        }
+
         public IPsdFile Owner
         {
             get;
-            internal set;
         }
     }
 }

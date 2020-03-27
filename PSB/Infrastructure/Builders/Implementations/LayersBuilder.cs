@@ -28,7 +28,7 @@ namespace Psb.Infrastructure.Builders.Implementations
 
         internal Domain.ILayerList GetLayers()
         {
-            var result = new Domain.Implementations.LayerList();
+            var result = new Domain.Implementations.LayerList(_owner);
 
             _layersBuilder.ForEach(l => result.Add(l.GetLayer()));
 

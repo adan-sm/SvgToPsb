@@ -10,7 +10,7 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
     public class LayerSectionWriter : ILayerSectionWriter
     {
         private readonly IBinaryWriter _binaryWriter;
-        private readonly Domain.ILayer _layer;
+        private readonly ILayer _layer;
 
         public LayerSectionWriter(IBinaryWriter binaryWriter, ILayer layer)
         {
@@ -20,7 +20,14 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
 
         public void Write()
         {
-            
+            _binaryWriter.WriteRectangle(_layer.Rectangle);
+            // TODO : channel
+            _binaryWriter.WriteAsciiCharacters("8BIM");
+            _binaryWriter.WriteAsciiCharacters(_layer.BlendMode.Description());
+            _binaryWriter.WriteByte(_layer.Opacity);
+            _binaryWriter.WriteBool(_layer.Clipping);
+            // TODO : flags
+            _binaryWriter.WriteFillers(1);
         }
     }
 }

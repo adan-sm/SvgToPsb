@@ -103,5 +103,17 @@ namespace Psb.Domain
         }
 
         public FileMode FileMode => _fileModeComputer.GetFileMode(this);
+
+        public ILayerList Layers
+        {
+            get;
+            internal set;
+        }
+
+        public ILayer BaseLayer
+        {
+            get;
+            internal set;
+        }
     }
 }

@@ -96,6 +96,16 @@ namespace Psb.Infrastructure.Stream.Writer
             _file.Write(bytes, 0, sizeof(uint));
         }
 
+        public void WriteUInt64(ulong value)
+        {
+            var bytes = new byte[sizeof(ulong)];
+            var span = new Span<byte>(bytes);
+
+            BinaryPrimitives.WriteUInt64BigEndian(span, value);
+
+            _file.Write(bytes, 0, sizeof(ulong));
+        }
+
         public void WriteBool(bool value)
         {
             _file.WriteByte(Convert.ToByte(value));
@@ -148,6 +158,14 @@ namespace Psb.Infrastructure.Stream.Writer
             WriteInt32(rectangle.Left);
             WriteInt32(rectangle.Bottom);
             WriteInt32(rectangle.Right);
+        }
+
+        public void WriteFillers(int howMany)
+        {
+            for (int i = 0; i < howMany; i++)
+            {
+                WriteByte(0);
+            }
         }
     }
 }

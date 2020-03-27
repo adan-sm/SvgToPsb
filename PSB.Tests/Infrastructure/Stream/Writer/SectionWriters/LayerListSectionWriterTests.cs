@@ -35,7 +35,7 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
         {
             const int layerCount = 10;
 
-            var layerList = new Psb.Domain.Implementations.LayerList { Owner = psdFile };
+            var layerList = new Psb.Domain.Implementations.LayerList(psdFile);
             var layers = new List<Moq.Mock<Psb.Domain.ILayer>>();
 
             for (int i = 0; i < layerCount; i++)

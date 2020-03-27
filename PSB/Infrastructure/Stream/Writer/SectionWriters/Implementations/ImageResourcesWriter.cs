@@ -9,7 +9,7 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
     public class ImageResourcesWriter : IImageResourcesWriter
     {
         private readonly IBinaryWriter _binaryWriter;
-        private readonly Psb.Domain.IImageResourceList _imageResources;
+        private readonly IImageResourceList _imageResources;
         private readonly ImageResourceWriters.IImageResourceWriterFactory _factory;
 
         public ImageResourcesWriter(IBinaryWriter binaryWriter, IImageResourceList imageResources)
@@ -29,7 +29,7 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
 
         public void Write()
         {
-            using (var blockLength = BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter))
+            using (var blockLength = BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, Domain.Enums.FileMode.RegularFile))
             {
                 foreach(var currentImageResource in _imageResources)
                 {

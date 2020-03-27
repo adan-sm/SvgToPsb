@@ -11,5 +11,7 @@
         
         IColorModeData ColorModeData { get; }
         IImageResourceList ImageResources { get; }
+        ILayerList Layers { get; }
+        ILayer BaseLayer { get; }
     }
 }

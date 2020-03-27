@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Psb.Infrastructure.Builders;
+using System;
 
 namespace Svg2Psb
 {
@@ -12,7 +13,7 @@ namespace Svg2Psb
                                     .WithImagesResources(resources =>
                                        {
                                            resources
-                                            .Add(Psb.Domain.ImageResources.Implementations.VersionInfo.CreateDefaultVersionInfo());
+                                            .AddDefaultVersionInfo();
                                        })
                                     .WithLayers( builder =>
                                         {

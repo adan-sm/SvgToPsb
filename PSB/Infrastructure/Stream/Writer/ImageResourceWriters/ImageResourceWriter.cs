@@ -25,7 +25,7 @@ namespace Psb.Infrastructure.Stream.Writer.ImageResourceWriters
             binaryWriter.WriteUInt16(_imageResource.Id);
             binaryWriter.WritePascalString(_imageResource.Name, 2);
 
-            using (var blockLength = BlockLengthWriter.CreateBlockLengthWriter(binaryWriter))
+            using (var blockLength = BlockLengthWriter.CreateBlockLengthWriter(binaryWriter, Domain.Enums.FileMode.RegularFile))
             {
                 var position = binaryWriter.Position;
 
