@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Psb.Domain;
+using System;
 using System.Buffers.Binary;
 using System.IO;
 
@@ -139,6 +140,14 @@ namespace Psb.Infrastructure.Stream.Writer
             {
                 WriteByte(0);
             }
+        }
+
+        public void WriteRectangle(Rectangle rectangle)
+        {
+            WriteInt32(rectangle.Top);
+            WriteInt32(rectangle.Left);
+            WriteInt32(rectangle.Bottom);
+            WriteInt32(rectangle.Right);
         }
     }
 }

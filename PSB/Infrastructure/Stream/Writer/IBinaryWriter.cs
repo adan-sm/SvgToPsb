@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Psb.Domain;
+using System;
 
 namespace Psb.Infrastructure.Stream.Writer
 {
@@ -24,7 +25,7 @@ namespace Psb.Infrastructure.Stream.Writer
         void WriteByte(byte value);
 
         void WriteInt16(short value);
-
+        
         void WriteInt32(int value);
 
         void WriteUInt16(ushort value);
@@ -38,6 +39,8 @@ namespace Psb.Infrastructure.Stream.Writer
         void WriteEnum16<T>(T enumValue) where T : Enum;
 
         void WriteEnum32<T>(T enumValue) where T : Enum;
+
+        void WriteRectangle(Rectangle rectangle);
 
         void Seek(long offset);
 

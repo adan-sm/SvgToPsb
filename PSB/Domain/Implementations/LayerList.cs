@@ -9,5 +9,10 @@ namespace Psb.Domain.Implementations
     /// </summary>
     public class LayerList : List<ILayer>, ILayerList
     {
+        public IPsdFile Owner
+        {
+            get;
+            internal set;
+        }
     }
 }

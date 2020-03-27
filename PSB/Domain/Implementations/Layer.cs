@@ -41,6 +41,24 @@ namespace Psb.Domain.Implementations
             internal set;
         }
 
+        public byte Opacity
+        {
+            get;
+            internal set;
+        }
+
+        public bool Clipping
+        {
+            get;
+            internal set;
+        }
+
+        public LayerFlag Flags
+        {
+            get;
+            internal set;
+        }
+
         public void SetImage(Bitmap bitmap)
         {
             _image = bitmap;

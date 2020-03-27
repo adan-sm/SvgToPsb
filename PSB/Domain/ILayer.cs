@@ -12,6 +12,12 @@ namespace Psb.Domain
 
         IPsdFile Owner { get; }
 
+        byte Opacity { get; }
+
+        bool Clipping { get; }
+
+        Enums.LayerFlag Flags { get; }
+
         IChannelList Channels { get; }
 
         void SetImage(Bitmap bitmap);
