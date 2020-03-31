@@ -26,7 +26,7 @@ namespace Svg2Psb
                                             builder
                                                 .CreateLayer()
                                                 .WithImage(null)
-                                                .WithName("Character")
+                                                .WithName("Characteré")
                                                 .WithRectangle(new Psb.Domain.Rectangle());
                                         })
                                     .WithAutomaticDimensionsFromLayers()

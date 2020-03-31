@@ -1,6 +1,7 @@
 ﻿using Psb.Domain.Enums;
 using System;
 using System.Drawing;
+using System.Linq;
 
 namespace Psb.Domain.Implementations
 {
@@ -10,6 +11,16 @@ namespace Psb.Domain.Implementations
     public class Layer : ILayer
     {
         private Bitmap _image;
+
+        public Layer()
+        {
+            LayerInformations = new LayerAdditionalInfo.LayerAdditionalInfoList();
+
+            LayerInformations.Add(new LayerAdditionalInfo.UnicodeLayerName
+            {
+                Owner = this
+            });
+        }
 
         public string Name
         {
@@ -54,6 +65,12 @@ namespace Psb.Domain.Implementations
         }
 
         public LayerFlag Flags
+        {
+            get;
+            internal set;
+        }
+
+        public LayerAdditionalInfo.ILayerAdditionalInfoList LayerInformations
         {
             get;
             internal set;

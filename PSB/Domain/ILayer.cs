@@ -16,6 +16,8 @@ namespace Psb.Domain
 
         bool Clipping { get; }
 
+        LayerAdditionalInfo.ILayerAdditionalInfoList LayerInformations { get; }
+
         Enums.LayerFlag Flags { get; }
 
         IChannelList Channels { get; }

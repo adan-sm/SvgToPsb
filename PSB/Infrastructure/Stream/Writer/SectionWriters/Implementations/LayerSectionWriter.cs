@@ -11,11 +11,14 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
     {
         private readonly IBinaryWriter _binaryWriter;
         private readonly ILayer _layer;
+        private readonly LayerAdditionalInfoWriters.ILayerAdditionalInfoWriterFactory _layerAdditionalInfoWriterFactory;
 
-        public LayerSectionWriter(IBinaryWriter binaryWriter, ILayer layer)
+        public LayerSectionWriter(IBinaryWriter binaryWriter, ILayer layer, LayerAdditionalInfoWriters.ILayerAdditionalInfoWriterFactory layerAdditionalInfoWriterFactory = null)
         {
             _binaryWriter = binaryWriter ?? throw new ArgumentNullException(nameof(binaryWriter));
             _layer = layer ?? throw new ArgumentNullException(nameof(layer));
+
+            _layerAdditionalInfoWriterFactory = layerAdditionalInfoWriterFactory ?? new LayerAdditionalInfoWriters.Implementations.LayerAdditionalInfoWriterFactory();
         }
 
         public void Write()
@@ -35,6 +38,13 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
                 // TODO : BLENDING RANGES
 
                 _binaryWriter.WritePascalString(_layer.Name, 4, true);
+
+                foreach (var currentLayerInfo in _layer.LayerInformations)
+                {
+                    _layerAdditionalInfoWriterFactory
+                        .Get(currentLayerInfo)
+                        .Write(_binaryWriter);
+                }
             }
         }
     }
