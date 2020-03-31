@@ -33,7 +33,7 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
 
             var widths = new uint[] { 1, 1000, 100000 };
             var heights = new uint[] { 2, 1001, 100001 };
-            var channels = new ushort[] { 1, 3, 4, 10 };
+            var channels = new ushort[] { 1, 10 };
             var colorModes = Enum.GetValues(typeof(Psb.Domain.Enums.ColorMode));
             var depths = Enum.GetValues(typeof(Psb.Domain.Enums.NumberOfBitsPerChannel));
 

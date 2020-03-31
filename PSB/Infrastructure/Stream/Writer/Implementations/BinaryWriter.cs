@@ -120,11 +120,16 @@ namespace Psb.Infrastructure.Stream.Writer
             WriteBytes(data);
         }
 
-        public void WritePascalString(string value, int padMultiple = 2)
+        public void WritePascalString(string value, int padMultiple = 2, bool shortenIfNecessary = true)
         {
-            if (value.Length > byte.MaxValue)
+            if (value.Length >= byte.MaxValue)
             {
-                throw new ArgumentException($"'{value}' length is too long, max {byte.MaxValue}");
+                if (!shortenIfNecessary)
+                {
+                    throw new ArgumentException($"'{value}' length is too long, max {byte.MaxValue}");
+                }
+
+                value = value.Substring(0, byte.MaxValue);
             }
 
             var position = _file.Position;

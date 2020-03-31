@@ -36,7 +36,7 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.ImageResourceWriters
             // assert
             binaryWriter.Verify(b => b.WriteAsciiCharacters("8BIM"), Moq.Times.Once());
             binaryWriter.Verify(b => b.WriteUInt16(imageResourceId), Moq.Times.Once());
-            binaryWriter.Verify(b => b.WritePascalString(imageResourceName, 2), Moq.Times.Once());
+            binaryWriter.Verify(b => b.WritePascalString(imageResourceName, 2, true), Moq.Times.Once());
 
             // TODO : verify BlockLengthWriter is called
             sut.Verify(s => s.WriteInternal(binaryWriter.Object), Moq.Times.Once());

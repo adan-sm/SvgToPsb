@@ -13,7 +13,7 @@ namespace Psb.Infrastructure.Stream.Writer
         /// <param name="value"></param>
         void WriteUnicodeString(string value);
 
-        void WritePascalString(string value, int padMultiple);
+        void WritePascalString(string value, int padMultiple, bool shortenIfNecessary);
 
         /// <summary>
         /// Writes an array of characters as bytes, with no leading size.

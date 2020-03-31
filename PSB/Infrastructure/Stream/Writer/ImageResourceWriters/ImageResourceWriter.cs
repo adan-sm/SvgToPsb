@@ -23,7 +23,7 @@ namespace Psb.Infrastructure.Stream.Writer.ImageResourceWriters
         {
             binaryWriter.WriteAsciiCharacters("8BIM");
             binaryWriter.WriteUInt16(_imageResource.Id);
-            binaryWriter.WritePascalString(_imageResource.Name, 2);
+            binaryWriter.WritePascalString(_imageResource.Name, 2, true);
 
             using (var blockLength = BlockLengthWriter.CreateBlockLengthWriter(binaryWriter, Domain.Enums.FileMode.RegularFile))
             {

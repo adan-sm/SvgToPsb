@@ -25,7 +25,9 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
             {
                 using (var blockLength2 = BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, _layers.Owner.FileMode))
                 {
-                    _binaryWriter.WriteUInt16((ushort)_layers.Count);
+                    var startPosition = _binaryWriter.Position;
+
+                    _binaryWriter.WriteInt16((short)_layers.Count);
 
                     foreach (var currentLayer in _layers)
                     {
@@ -33,6 +35,8 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
                             .Get(_binaryWriter, currentLayer)
                             .Write();
                     }
+
+                    _binaryWriter.WritePadding(startPosition, 4);
                 }
             }
         }

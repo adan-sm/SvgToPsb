@@ -28,6 +28,14 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
             _binaryWriter.WriteBool(_layer.Clipping);
             // TODO : flags
             _binaryWriter.WriteFillers(1);
+
+            using (var blockLengthWriter = BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, Domain.Enums.FileMode.RegularFile))
+            {
+                // TODO : MASKS
+                // TODO : BLENDING RANGES
+
+                _binaryWriter.WritePascalString(_layer.Name, 4, true);
+            }
         }
     }
 }

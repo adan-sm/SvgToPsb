@@ -30,13 +30,13 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
 
             foreach (var blendMode in blendModes)
             {
-                for (byte opacity = 0; opacity < byte.MaxValue; opacity++)
+                for (int opacity = 0; opacity < byte.MaxValue; opacity += 100)
                 {
                     var testCase = new LayerSectionWriterTestCase
                     {
                         BlendMode = (Psb.Domain.Enums.BlendModeKey)blendMode,
                         Rectangle = new Psb.Domain.Rectangle { Bottom = 0, Top = 1, Left = 2, Right = 3 },
-                        Opacity = opacity,
+                        Opacity = (byte)opacity,
                         Clipping = true,
                     };
 
@@ -48,7 +48,7 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
         }
 
         [TestCaseSource(nameof(GetTests))]
-        public void Write_ShouldWriteEverythin_WhenCalled(LayerSectionWriterTestCase testCase)
+        public void Write_ShouldWriteEverything_WhenCalled(LayerSectionWriterTestCase testCase)
         {
             // arrange
             var binaryWriter = new Moq.Mock<Psb.Infrastructure.Stream.Writer.IBinaryWriter>();
@@ -57,6 +57,14 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
             layer
                 .SetupGet(l => l.BlendMode)
                 .Returns(testCase.BlendMode);
+
+            layer
+                .SetupGet(l => l.Opacity)
+                .Returns(testCase.Opacity);
+
+            layer
+                .SetupGet(l => l.Clipping)
+                .Returns(testCase.Clipping);
 
             layer
                 .SetupGet(l => l.Rectangle)
