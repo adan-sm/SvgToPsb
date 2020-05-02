@@ -13,7 +13,9 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
         private readonly ILayer _layer;
         private readonly LayerAdditionalInfoWriters.ILayerAdditionalInfoWriterFactory _layerAdditionalInfoWriterFactory;
 
-        public LayerSectionWriter(IBinaryWriter binaryWriter, ILayer layer, LayerAdditionalInfoWriters.ILayerAdditionalInfoWriterFactory layerAdditionalInfoWriterFactory = null)
+        public LayerSectionWriter(IBinaryWriter binaryWriter,
+                                  ILayer layer,
+                                  LayerAdditionalInfoWriters.ILayerAdditionalInfoWriterFactory layerAdditionalInfoWriterFactory = null)
         {
             _binaryWriter = binaryWriter ?? throw new ArgumentNullException(nameof(binaryWriter));
             _layer = layer ?? throw new ArgumentNullException(nameof(layer));
@@ -34,10 +36,8 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
 
             using (var blockLengthWriter = BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, Domain.Enums.FileMode.RegularFile))
             {
-                // TODO : MASKS
-                _binaryWriter.WriteUInt32(0);
-                // TODO : BLENDING RANGES
-                _binaryWriter.WriteUInt32(0);
+                _binaryWriter.WriteUInt32(0); // TODO : MASKS (currently, by writing 0, there a no mask)
+                _binaryWriter.WriteUInt32(0); // TODO : BLENDING RANGES (currently, by writing 0, there a no mask)
 
                 _binaryWriter.WritePascalString(_layer.Name, 4, true);
 

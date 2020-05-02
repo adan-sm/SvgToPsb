@@ -16,7 +16,7 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
         {
             _binaryWriter = binaryWriter ?? throw new ArgumentNullException(nameof(binaryWriter));
             _layers = layers ?? throw new ArgumentNullException(nameof(layers));
-            _sectionWriterFactory = sectionWriterFactory ?? new Psb.Infrastructure.Stream.Writer.Implementations.SectionWriterFactory();
+            _sectionWriterFactory = sectionWriterFactory ?? new Writer.Implementations.SectionWriterFactory();
         }
 
         public void Write()

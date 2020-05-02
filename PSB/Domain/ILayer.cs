@@ -20,8 +20,6 @@ namespace Psb.Domain
 
         Enums.LayerFlags Flags { get; }
 
-        IChannelList Channels { get; }
-
         void SetImage(Bitmap bitmap);
 
         Bitmap GetImage();
