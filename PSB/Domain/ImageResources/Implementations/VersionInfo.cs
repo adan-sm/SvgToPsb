@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Psb.Domain.ImageResources.Implementations
+﻿namespace Psb.Domain.ImageResources.Implementations
 {
     /// <summary>
     /// TODO : remove public
@@ -26,8 +24,8 @@ namespace Psb.Domain.ImageResources.Implementations
         public ushort Id => ImageResourcesId.PS6_VersionInfo;
 
         public uint Version
-        { 
-            get; 
+        {
+            get;
             internal set;
         }
 

@@ -19,7 +19,7 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
 
         public void Write()
         {
-            switch(_colorModeData.Owner.ColorMode)
+            switch (_colorModeData.Owner.ColorMode)
             {
                 case Domain.Enums.ColorMode.DuoTone:
                 case Domain.Enums.ColorMode.Indexed:

@@ -4,7 +4,7 @@ namespace Psb.Infrastructure.Stream.Writer.LayerAdditionalInfoWriters.Implementa
 {
     public class UnicodeLayerNameWriter : LayerAdditionalInfoWriter<Domain.LayerAdditionalInfo.IUnicodeLayerName>
     {
-        public UnicodeLayerNameWriter(IUnicodeLayerName layerAdditionalInfo) 
+        public UnicodeLayerNameWriter(IUnicodeLayerName layerAdditionalInfo)
             : base(layerAdditionalInfo)
         {
         }

@@ -8,7 +8,7 @@
         ushort ChannelCount { get; }
         Enums.NumberOfBitsPerChannel Depth { get; }
         Enums.ColorMode ColorMode { get; }
-        
+
         IColorModeData ColorModeData { get; }
         IImageResourceList ImageResources { get; }
         ILayerList Layers { get; }

@@ -31,7 +31,7 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
         {
             using (var blockLength = BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, Domain.Enums.FileMode.RegularFile))
             {
-                foreach(var currentImageResource in _imageResources)
+                foreach (var currentImageResource in _imageResources)
                 {
                     var writer = _factory.Get(currentImageResource);
                     writer.Write(_binaryWriter);

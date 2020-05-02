@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Psb.Domain.LayerAdditionalInfo;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -11,7 +12,7 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
 
         public Psb.Domain.Enums.BlendModeKey BlendMode { get; set; }
 
-        public Psb.Domain.Enums.LayerFlag Flags { get; set; }
+        public Psb.Domain.Enums.LayerFlags Flags { get; set; }
 
         public bool Clipping { get; set; }
 
@@ -70,6 +71,10 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
                 .SetupGet(l => l.Rectangle)
                 .Returns(testCase.Rectangle);
 
+            layer
+                .SetupGet(l => l.LayerInformations)
+                .Returns(new LayerAdditionalInfoList());
+
             var sut = new Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations.LayerSectionWriter(binaryWriter.Object, layer.Object);
 
             // act
@@ -82,7 +87,7 @@ namespace Psb.Tests.Infrastructure.Stream.Writer.SectionWriters
             binaryWriter.Verify(b => b.WriteAsciiCharacters(testCase.BlendMode.Description()), Moq.Times.Once());
             binaryWriter.Verify(b => b.WriteByte(testCase.Opacity), Moq.Times.Once());
             binaryWriter.Verify(b => b.WriteBool(testCase.Clipping), Moq.Times.Once());
-            // TODO : flags
+            binaryWriter.Verify(b => b.WriteEnumByte(testCase.Flags), Moq.Times.Once());
             binaryWriter.Verify(b => b.WriteFillers(1), Moq.Times.Once());
         }
     }

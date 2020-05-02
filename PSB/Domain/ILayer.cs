@@ -18,7 +18,7 @@ namespace Psb.Domain
 
         LayerAdditionalInfo.ILayerAdditionalInfoList LayerInformations { get; }
 
-        Enums.LayerFlag Flags { get; }
+        Enums.LayerFlags Flags { get; }
 
         IChannelList Channels { get; }
 

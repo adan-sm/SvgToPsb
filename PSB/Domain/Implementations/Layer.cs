@@ -1,7 +1,5 @@
 ﻿using Psb.Domain.Enums;
-using System;
 using System.Drawing;
-using System.Linq;
 
 namespace Psb.Domain.Implementations
 {
@@ -14,12 +12,15 @@ namespace Psb.Domain.Implementations
 
         public Layer()
         {
-            LayerInformations = new LayerAdditionalInfo.LayerAdditionalInfoList();
-
-            LayerInformations.Add(new LayerAdditionalInfo.UnicodeLayerName
+            LayerInformations = new LayerAdditionalInfo.LayerAdditionalInfoList
             {
-                Owner = this
-            });
+                new LayerAdditionalInfo.UnicodeLayerName
+                {
+                    Owner = this
+                }
+            };
+
+            Visible = true;
         }
 
         public string Name
@@ -64,10 +65,26 @@ namespace Psb.Domain.Implementations
             internal set;
         }
 
-        public LayerFlag Flags
+        public LayerFlags Flags
         {
             get;
             internal set;
+        }
+
+        public bool Visible
+        {
+            get => Flags.HasFlag(LayerFlags.Visibility);
+            set
+            {
+                if (value)
+                {
+                    Flags |= LayerFlags.Visibility;
+                }
+                else
+                {
+                    Flags &= ~LayerFlags.Visibility;
+                }
+            }
         }
 
         public LayerAdditionalInfo.ILayerAdditionalInfoList LayerInformations

@@ -11,7 +11,7 @@ namespace Psb.Domain
         private uint _height;
         private ushort _channelCount;
 
-        public PsdFile() 
+        public PsdFile()
             : this(null)
         {
         }

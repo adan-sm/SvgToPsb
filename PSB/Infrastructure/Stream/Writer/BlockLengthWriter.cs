@@ -21,7 +21,7 @@ namespace Psb.Infrastructure.Stream.Writer
         {
             var lengthPosition = binaryWriter.Position;
 
-            if(fileMode == Domain.Enums.FileMode.RegularFile)
+            if (fileMode == Domain.Enums.FileMode.RegularFile)
             {
                 binaryWriter.WriteUInt32(0xBADDFEED);
             }
@@ -29,7 +29,7 @@ namespace Psb.Infrastructure.Stream.Writer
             {
                 binaryWriter.WriteUInt64(0xBADDFEEDBADDFEED);
             }
-            
+
             return new BlockLengthWriter(binaryWriter, lengthPosition, binaryWriter.Position, fileMode);
         }
 

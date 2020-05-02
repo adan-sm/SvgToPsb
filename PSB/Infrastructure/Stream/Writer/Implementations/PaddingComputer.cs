@@ -13,7 +13,7 @@ namespace Psb.Infrastructure.Stream.Writer.Implementations
 
             if (padMultiple < 1)
             {
-                throw new ArgumentException("Pad multiple must be > 0", nameof(padMultiple)); 
+                throw new ArgumentException("Pad multiple must be > 0", nameof(padMultiple));
             }
 
             var remainder = length % padMultiple;
@@ -21,7 +21,7 @@ namespace Psb.Infrastructure.Stream.Writer.Implementations
             {
                 return 0;
             }
-                
+
             var padding = padMultiple - remainder;
             return (int)padding;
         }

@@ -1,6 +1,4 @@
-﻿using Psb.Domain;
-
-namespace Psb.Infrastructure.Stream.Writer.ImageResourceWriters
+﻿namespace Psb.Infrastructure.Stream.Writer.ImageResourceWriters
 {
     internal class VersionInfoWriter : ImageResourceWriter<Psb.Domain.ImageResources.IVersionInfo>
     {

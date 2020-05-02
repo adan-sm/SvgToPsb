@@ -1,6 +1,7 @@
 ﻿using Psb.Domain;
 using System;
 using System.Buffers.Binary;
+using System.Globalization;
 using System.IO;
 
 namespace Psb.Infrastructure.Stream.Writer
@@ -41,14 +42,19 @@ namespace Psb.Infrastructure.Stream.Writer
             _file.Write(value, 0, value.Length);
         }
 
+        public void WriteEnumByte<T>(T enumValue) where T : Enum
+        {
+            WriteUInt16(Convert.ToByte(enumValue, CultureInfo.InvariantCulture));
+        }
+
         public void WriteEnum16<T>(T enumValue) where T : Enum
         {
-            WriteUInt16(Convert.ToUInt16(enumValue));
+            WriteUInt16(Convert.ToUInt16(enumValue, CultureInfo.InvariantCulture));
         }
 
         public void WriteEnum32<T>(T enumValue) where T : Enum
         {
-            WriteUInt32(Convert.ToUInt32(enumValue));
+            WriteUInt32(Convert.ToUInt32(enumValue, CultureInfo.InvariantCulture));
         }
 
         public void WriteByte(byte value)

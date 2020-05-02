@@ -7,7 +7,7 @@ namespace Psb.Infrastructure.Stream.Writer.ImageResourceWriters
     {
         public IImageResourceWriter Get(IImageResource imageResource)
         {
-            switch(imageResource.Id)
+            switch (imageResource.Id)
             {
                 case Psb.Domain.ImageResources.ImageResourcesId.PS6_VersionInfo: return new VersionInfoWriter(imageResource as Domain.ImageResources.IVersionInfo);
             }

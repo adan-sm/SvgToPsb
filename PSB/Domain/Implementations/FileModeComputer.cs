@@ -1,5 +1,4 @@
 ﻿using Psb.Domain.Enums;
-using System;
 
 namespace Psb.Domain.Implementations
 {
@@ -10,8 +9,8 @@ namespace Psb.Domain.Implementations
     {
         public FileMode GetFileMode(IPsdFile psdFile)
         {
-            if(psdFile.Width > Consts.PsdFile.MaxRegularFileWidth) { return FileMode.BigFile; }
-            if(psdFile.Height > Consts.PsdFile.MaxRegularFileHeight) { return FileMode.BigFile; }
+            if (psdFile.Width > Consts.PsdFile.MaxRegularFileWidth) { return FileMode.BigFile; }
+            if (psdFile.Height > Consts.PsdFile.MaxRegularFileHeight) { return FileMode.BigFile; }
 
             return FileMode.RegularFile;
         }

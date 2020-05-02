@@ -25,7 +25,7 @@ namespace Psb.Infrastructure.Stream.Writer
         void WriteByte(byte value);
 
         void WriteInt16(short value);
-        
+
         void WriteInt32(int value);
 
         void WriteUInt16(ushort value);
@@ -38,9 +38,13 @@ namespace Psb.Infrastructure.Stream.Writer
 
         void WriteBool(bool value);
 
+        void WriteEnumByte<T>(T enumValue) where T : Enum;
+
         void WriteEnum16<T>(T enumValue) where T : Enum;
-        void WriteFillers(int howMany);
+
         void WriteEnum32<T>(T enumValue) where T : Enum;
+
+        void WriteFillers(int howMany);
 
         void WriteRectangle(Rectangle rectangle);
 

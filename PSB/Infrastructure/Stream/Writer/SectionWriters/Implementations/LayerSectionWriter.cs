@@ -29,13 +29,15 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
             _binaryWriter.WriteAsciiCharacters(_layer.BlendMode.Description());
             _binaryWriter.WriteByte(_layer.Opacity);
             _binaryWriter.WriteBool(_layer.Clipping);
-            // TODO : flags
+            _binaryWriter.WriteEnumByte(_layer.Flags);
             _binaryWriter.WriteFillers(1);
 
             using (var blockLengthWriter = BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, Domain.Enums.FileMode.RegularFile))
             {
                 // TODO : MASKS
+                _binaryWriter.WriteUInt32(0);
                 // TODO : BLENDING RANGES
+                _binaryWriter.WriteUInt32(0);
 
                 _binaryWriter.WritePascalString(_layer.Name, 4, true);
 

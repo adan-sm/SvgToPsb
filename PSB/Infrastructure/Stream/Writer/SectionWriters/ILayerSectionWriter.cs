@@ -2,6 +2,6 @@
 {
     public interface ILayerSectionWriter : ISectionWriter
     {
-        
+
     }
 }
