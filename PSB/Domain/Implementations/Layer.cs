@@ -1,4 +1,6 @@
-﻿using Psb.Domain.Enums;
+﻿using Psb.Domain.ChannelAndBitmapData;
+using Psb.Domain.Enums;
+using System;
 using System.Drawing;
 
 namespace Psb.Domain.Implementations
@@ -96,6 +98,38 @@ namespace Psb.Domain.Implementations
         public void SetImage(Bitmap bitmap)
         {
             _image = bitmap;
+
+            ConstructChannels(bitmap);
+        }
+
+        private void ConstructChannels(Bitmap bitmap)
+        {
+            if (Owner.ColorMode == ColorMode.Bitmap)
+            {
+                Channels = new ChannelList
+                {
+                    new Channel(this, ChannelId.RedId, DataBuilder.BuildChannelDataFromBitmap(ChannelId.RedId, bitmap, CompressionMode.RawImageData)),
+                    new Channel(this, ChannelId.GreenId, DataBuilder.BuildChannelDataFromBitmap(ChannelId.GreenId, bitmap, CompressionMode.RawImageData)),
+                    new Channel(this, ChannelId.BlueId, DataBuilder.BuildChannelDataFromBitmap(ChannelId.BlueId, bitmap, CompressionMode.RawImageData)),
+                    new Channel(this, ChannelId.AlphaId, DataBuilder.BuildChannelDataFromBitmap(ChannelId.AlphaId, bitmap, CompressionMode.RawImageData)),
+                };
+
+                return;
+            }
+
+            if (Owner.ColorMode == ColorMode.RGB)
+            {
+                Channels = new ChannelList
+                {
+                    new Channel(this, ChannelId.RedId, DataBuilder.BuildChannelDataFromBitmap(ChannelId.RedId, bitmap, CompressionMode.RawImageData)),
+                    new Channel(this, ChannelId.GreenId, DataBuilder.BuildChannelDataFromBitmap(ChannelId.GreenId, bitmap, CompressionMode.RawImageData)),
+                    new Channel(this, ChannelId.BlueId, DataBuilder.BuildChannelDataFromBitmap(ChannelId.BlueId, bitmap, CompressionMode.RawImageData)),
+                };
+
+                return;
+            }
+
+            throw new NotImplementedException();
         }
 
         public Bitmap GetImage()

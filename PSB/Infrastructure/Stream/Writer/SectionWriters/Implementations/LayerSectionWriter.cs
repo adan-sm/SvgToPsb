@@ -1,4 +1,5 @@
 ﻿using Psb.Domain;
+using Psb.Domain.Implementations;
 using System;
 
 
@@ -26,7 +27,21 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
         public void Write()
         {
             _binaryWriter.WriteRectangle(_layer.Rectangle);
-            // TODO : channel
+
+            // TODO : move to an other class
+            _binaryWriter.WriteUInt16((ushort)_layer.Channels.Count);
+            foreach (var ichannel in _layer.Channels)
+            {
+                var channel = ichannel as Channel;
+                _binaryWriter.WriteInt16(channel.Id);
+                using (BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, _layer.Owner.FileMode))
+                {
+                    _binaryWriter.WriteEnum16(channel.ChannelData.CompressionMode);
+                    _binaryWriter.WriteBytes(channel.ChannelData.Data);
+                }
+            }
+            // ...
+
             _binaryWriter.WriteAsciiCharacters("8BIM");
             _binaryWriter.WriteAsciiCharacters(_layer.BlendMode.Description());
             _binaryWriter.WriteByte(_layer.Opacity);

@@ -5,6 +5,6 @@
         ILayer Owner { get; }
 
         // TODO : implement ChannelId type
-        ushort Id { get;  }
+        short Id { get;  }
     }
 }

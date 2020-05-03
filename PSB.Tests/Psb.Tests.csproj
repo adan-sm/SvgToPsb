@@ -21,4 +21,8 @@
     <ProjectReference Include="..\PSB\Psb.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\ChannelAndBitmapData\" />
+  </ItemGroup>
+
 </Project>

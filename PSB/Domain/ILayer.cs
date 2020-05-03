@@ -12,6 +12,8 @@ namespace Psb.Domain
 
         IPsdFile Owner { get; }
 
+        IChannelList Channels { get; }
+
         byte Opacity { get; }
 
         bool Clipping { get; }

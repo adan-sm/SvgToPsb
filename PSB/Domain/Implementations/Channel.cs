@@ -5,7 +5,7 @@ namespace Psb.Domain.Implementations
 {
     public class Channel : IChannel
     {
-        internal Channel(ILayer owner, ushort id, ChannelData channelData)
+        internal Channel(ILayer owner, short id, ChannelData channelData)
         {
             Owner = owner ?? throw new ArgumentNullException(nameof(owner));
             Id = id;
@@ -14,7 +14,7 @@ namespace Psb.Domain.Implementations
 
         public ILayer Owner { get; }
 
-        public ushort Id { get; }
+        public short Id { get; }
 
         internal ChannelData ChannelData { get; }
     }
