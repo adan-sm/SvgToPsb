@@ -11,17 +11,17 @@ namespace Psb.Domain
         {
             Top = top;
             Left = left;
-            Bottom = top + height - 1;
-            Right = left + width - 1;
+            Bottom = top + height;
+            Right = left + width;
         }
 
-        public int Top { get; set; }
+        public int Top { get; }
 
-        public int Left { get; set; }
+        public int Left { get; }
 
-        public int Bottom { get; set; }
+        public int Bottom { get; }
 
-        public int Right { get; set; }
+        public int Right { get; }
 
         public static Rectangle Merge(Rectangle r1, Rectangle r2)
         {
@@ -30,13 +30,7 @@ namespace Psb.Domain
             var b = Math.Max(r1.Bottom, r2.Bottom);
             var r = Math.Max(r1.Right, r2.Right);
 
-            return new Rectangle
-            {
-                Top = t,
-                Left = l,
-                Bottom = b,
-                Right = r,
-            };
+            return new Rectangle(t, l, b, r);
         }
     }
 }

@@ -115,7 +115,7 @@ namespace Psb.Infrastructure.Builders.Implementations
                 mergedRectangle = Domain.Rectangle.Merge(mergedRectangle, currentLayer.Rectangle);
             }
 
-            return ((uint)mergedRectangle.Right + 1, (uint)mergedRectangle.Bottom + 1);
+            return ((uint)mergedRectangle.Right, (uint)mergedRectangle.Bottom);
         }
 
         public IPsdFile Build()
