@@ -34,10 +34,15 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
             {
                 var channel = ichannel as Channel;
                 _binaryWriter.WriteInt16(channel.Id);
-                using (BlockLengthWriter.CreateBlockLengthWriter(_binaryWriter, _layer.Owner.FileMode))
+                var length = sizeof(ushort) + channel.ChannelData.Data.Length;
+
+                if (_layer.Owner.FileMode == Domain.Enums.FileMode.BigFile)
                 {
-                    _binaryWriter.WriteEnum16(channel.ChannelData.CompressionMode);
-                    _binaryWriter.WriteBytes(channel.ChannelData.Data);
+                    _binaryWriter.WriteUInt64((ulong)length);
+                }
+                else
+                {
+                    _binaryWriter.WriteUInt32((uint)length);
                 }
             }
             // ...

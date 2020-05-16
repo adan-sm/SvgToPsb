@@ -35,13 +35,13 @@ namespace Svg2Psb
                                     .CreateLayer()
                                     .WithImage(background)
                                     .WithName("Background")
-                                    .WithRectangle(new Psb.Domain.Rectangle());
+                                    .WithRectangle(new Psb.Domain.Rectangle(0, 0, 200, 200));
 
                                 builder
                                     .CreateLayer()
                                     .WithImage(character)
                                     .WithName("Characteré")
-                                    .WithRectangle(new Psb.Domain.Rectangle());
+                                    .WithRectangle(new Psb.Domain.Rectangle(10, 10, 180, 180));
                             })
                             .WithAutomaticDimensionsFromLayers()
                             .Build();

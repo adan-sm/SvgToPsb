@@ -1,5 +1,7 @@
 ﻿using Psb.Domain;
+using Psb.Domain.Implementations;
 using System;
+using System.Drawing;
 using System.Linq;
 
 namespace Psb.Infrastructure.Builders.Implementations
@@ -106,11 +108,11 @@ namespace Psb.Infrastructure.Builders.Implementations
                 throw new InvalidOperationException("No layer in the file");
             }
 
-            var mergedRectangle = new Rectangle();
+            var mergedRectangle = new Domain.Rectangle();
 
             foreach (var currentLayer in layers)
             {
-                mergedRectangle = Rectangle.Merge(mergedRectangle, currentLayer.Rectangle);
+                mergedRectangle = Domain.Rectangle.Merge(mergedRectangle, currentLayer.Rectangle);
             }
 
             return ((uint)mergedRectangle.Right + 1, (uint)mergedRectangle.Bottom + 1);
@@ -133,8 +135,12 @@ namespace Psb.Infrastructure.Builders.Implementations
             {
                 result.Width = _width;
                 result.Height = _height;
+            
             }
 
+            result.ChannelCount = _colorMode == Domain.Enums.ColorMode.Bitmap ? (ushort)4 :
+                                    _colorMode == Domain.Enums.ColorMode.RGB ? (ushort)3 :
+                                        throw new NotImplementedException();
             result.Depth = _depth;
             result.ColorMode = _colorMode;
             result.ColorModeData = new Domain.Implementations.ColorModeData { Owner = result };
@@ -142,7 +148,27 @@ namespace Psb.Infrastructure.Builders.Implementations
             result.ImageResources = GetImageResources();
             result.Layers = layers;
 
+            result.BaseLayer = ConstructBaseLayer(result);
+
             return result;
+        }
+
+        private ILayer ConstructBaseLayer(PsdFile result)
+        {
+            using (var globalImage = new Bitmap((int)result.Width, (int)result.Height))
+            {
+                using (var g = Graphics.FromImage(globalImage))
+                {
+
+                }
+
+                var builder = new LayerBuilder(result)
+                                .WithImage(globalImage)
+                                .WithName("global")
+                                as LayerBuilder;
+                
+                return builder.GetLayer();
+            }
         }
 
         private IImageResourceList GetImageResources()
@@ -155,7 +181,7 @@ namespace Psb.Infrastructure.Builders.Implementations
                 return imageResourceBuilder.Get();
             }
 
-            return new Domain.Implementations.ImageResourceList();
+            return new ImageResourceList();
         }
 
         private ILayerList GetLayers(PsdFile result)

@@ -4,6 +4,17 @@ namespace Psb.Domain
 {
     public struct Rectangle
     {
+        public Rectangle(int top,
+                         int left,
+                         int width,
+                         int height)
+        {
+            Top = top;
+            Left = left;
+            Bottom = top + height - 1;
+            Right = left + width - 1;
+        }
+
         public int Top { get; set; }
 
         public int Left { get; set; }

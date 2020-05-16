@@ -1,4 +1,5 @@
 ﻿using Psb.Domain;
+using Psb.Domain.Implementations;
 using System;
 
 namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
@@ -34,6 +35,17 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
                         _sectionWriterFactory
                             .Get(_binaryWriter, currentLayer)
                             .Write();
+                    }
+
+                    foreach(var currentLayer in _layers)
+                    {
+                        foreach (var ichannel in currentLayer.Channels)
+                        {
+                            var channel = ichannel as Channel;
+
+                            _binaryWriter.WriteEnum16(channel.ChannelData.CompressionMode);
+                            _binaryWriter.WriteBytes(channel.ChannelData.Data);
+                        }
                     }
 
                     _binaryWriter.WritePadding(startPosition, 4);

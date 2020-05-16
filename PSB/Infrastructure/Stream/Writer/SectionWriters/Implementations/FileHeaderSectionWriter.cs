@@ -23,8 +23,8 @@ namespace Psb.Infrastructure.Stream.Writer.SectionWriters.Implementations
             _binaryWriter.WriteEnum16(_psdFile.FileMode);
             _binaryWriter.WriteBytes(new byte[6]);
             _binaryWriter.WriteUInt16(_psdFile.ChannelCount);
-            _binaryWriter.WriteUInt32(_psdFile.Height);
-            _binaryWriter.WriteUInt32(_psdFile.Width);
+            _binaryWriter.WriteInt32((int)_psdFile.Width);
+            _binaryWriter.WriteInt32((int)_psdFile.Height);
             _binaryWriter.WriteEnum16(_psdFile.Depth);
             _binaryWriter.WriteEnum16(_psdFile.ColorMode);
         }

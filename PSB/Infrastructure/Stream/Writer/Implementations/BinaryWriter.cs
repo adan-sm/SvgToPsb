@@ -44,7 +44,7 @@ namespace Psb.Infrastructure.Stream.Writer
 
         public void WriteEnumByte<T>(T enumValue) where T : Enum
         {
-            WriteUInt16(Convert.ToByte(enumValue, CultureInfo.InvariantCulture));
+            WriteByte(Convert.ToByte(enumValue, CultureInfo.InvariantCulture));
         }
 
         public void WriteEnum16<T>(T enumValue) where T : Enum

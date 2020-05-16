@@ -51,14 +51,16 @@ namespace Psb.Infrastructure.Builders.Implementations
             return this;
         }
 
-        internal Domain.ILayer GetLayer()
+        public ILayer GetLayer()
         {
             var result = new Domain.Implementations.Layer
             {
                 BlendMode = _blendModeKey,
                 Name = _name,
                 Rectangle = _rectangle,
-                Owner = _owner
+                Owner = _owner,
+                Opacity = 255,
+                Visible = true
             };
 
             result.SetImage(_bitmap);

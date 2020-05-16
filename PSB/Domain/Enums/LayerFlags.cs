@@ -6,7 +6,7 @@ namespace Psb.Domain.Enums
     public enum LayerFlags
     {
         None,
-        TransparencyProtection,
+        TransparencyProtection = None,
         Visibility,
         Obsolete,
         Bit4IsRelevant,
